@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { signIn } from "next-auth/react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +18,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   email: z.string().min(8).max(50).email(),
@@ -23,6 +26,8 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -31,8 +36,31 @@ export default function LoginForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const result = signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
+      });
+			console.log(result);
+
+      toast.dismiss();
+
+      toast.promise(result, {
+        loading: "Loading...",
+        success: () => {
+          form.reset();
+          router.push("/dashboard");
+          return "Login Berhasil!";
+        },
+        error: (result) => {
+          return result;
+        },
+      });
+    } catch (error) {
+      console.log(`Error catch: ${error}`);
+    }
   }
 
   return (

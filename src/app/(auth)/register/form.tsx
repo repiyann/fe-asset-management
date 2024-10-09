@@ -1,8 +1,10 @@
 "use client";
 
+import axios from "axios";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,7 +19,7 @@ import {
 
 const formSchema = z
   .object({
-    name: z.string().min(8).max(50),
+    fullName: z.string().min(8).max(50),
     email: z.string().min(8).max(50).email(),
     password: z.string().min(8).max(16),
     password_confirmation: z.string().min(8).max(16),
@@ -28,17 +30,35 @@ const formSchema = z
   });
 
 export default function RegisterForm() {
+  const router = useRouter()
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      fullName: "",
       email: "",
       password: "",
-      password_confirmation: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    axios
+      .post("http://localhost:3333/api/v1/auth/register", values, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then(() => {
+        router.push("/login");
+      })
+      .catch((error) => {
+        if (axios.isAxiosError(error)) {
+          console.error("Axios Error:", error.message);
+        } else {
+          console.error(
+            "General Error:",
+            error instanceof Error ? error.message : "Unknown error"
+          );
+        }
+      });
   }
 
   return (
@@ -48,7 +68,7 @@ export default function RegisterForm() {
           <div className="grid gap-2">
             <FormField
               control={form.control}
-              name="name"
+              name="fullName"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Fullname</FormLabel>
@@ -106,7 +126,7 @@ export default function RegisterForm() {
             />
           </div>
           <Button type="submit" className="w-full">
-            Login
+            Sign up
           </Button>
         </div>
       </form>
