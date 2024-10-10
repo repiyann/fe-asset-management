@@ -2,8 +2,17 @@ import Image from "next/image"
 import Link from "next/link"
 
 import LoginForm from "./form"
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+	// const { data: session } = useSession();
+	// const router = useRouter()
+
+	// if (session) {
+  //   router.push('/dashboard')
+  // }
+
 	return (
 		<div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2">
 			<div className="flex items-center justify-center py-12">

@@ -43,7 +43,6 @@ export default function LoginForm() {
         password: values.password,
         redirect: false,
       });
-			console.log(result);
 
       toast.dismiss();
 
@@ -54,12 +53,13 @@ export default function LoginForm() {
           router.push("/dashboard");
           return "Login Berhasil!";
         },
-        error: (result) => {
-          return result;
+        error: () => {
+          return "Kredensial salah";
         },
       });
     } catch (error) {
-      console.log(`Error catch: ${error}`);
+      console.log('An unexpected error occurred', error)
+      toast.error("An unexpected error occurred");
     }
   }
 
