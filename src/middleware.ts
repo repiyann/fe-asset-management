@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 export default async function middleware(req: NextRequest) {
   const token = req.cookies.get("next-auth.session-token");
@@ -16,4 +17,6 @@ export default async function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 
-export const config = { matcher: ["/dashboard", "/tes", "/login", "/register"] };
+export const config = {
+  matcher: ["/dashboard", "/tes", "/login", "/register"],
+};

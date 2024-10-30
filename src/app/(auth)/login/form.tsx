@@ -58,7 +58,6 @@ export default function LoginForm() {
         },
       });
     } catch (error) {
-      console.log('An unexpected error occurred', error)
       toast.error("An unexpected error occurred");
     }
   }

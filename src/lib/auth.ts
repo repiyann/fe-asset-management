@@ -1,5 +1,5 @@
-import axios from "axios";
-import { type NextAuthOptions } from "next-auth";
+import api from "@/app/api/api";
+import { getServerSession, type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 declare module "next-auth" {
@@ -28,14 +28,9 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const response = await axios.post(
-          "http://localhost:3333/api/v1/auth/login",
-          credentials,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
+        const response = await api.post(
+          "/auth/login",
+          credentials
         );
 
         const { token, user } = response.data.data;
@@ -76,3 +71,5 @@ export const authOptions: NextAuthOptions = {
     },
   },
 };
+
+export const getServerAuthSession = () => getServerSession(authOptions);

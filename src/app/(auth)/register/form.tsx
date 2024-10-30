@@ -1,6 +1,5 @@
 "use client";
 
-import axios from "axios";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -16,6 +15,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import api from "@/app/api/api";
+import axios from "axios";
+import { toast } from "sonner";
 
 const formSchema = z
   .object({
@@ -30,8 +32,8 @@ const formSchema = z
   });
 
 export default function RegisterForm() {
-  const router = useRouter()
-  
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -42,23 +44,18 @@ export default function RegisterForm() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    axios
-      .post("http://localhost:3333/api/v1/auth/register", values, {
-        headers: { "Content-Type": "application/json" },
-      })
-      .then(() => {
-        router.push("/login");
-      })
-      .catch((error) => {
-        if (axios.isAxiosError(error)) {
-          console.error("Axios Error:", error.message);
-        } else {
-          console.error(
-            "General Error:",
-            error instanceof Error ? error.message : "Unknown error"
-          );
-        }
-      });
+    toast.dismiss();
+    try {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, values);
+      toast.success("Registrasi berhasil");
+      router.push("/login");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.message);
+      } else {
+        toast.error(error instanceof Error ? error.message : "Unknown error");
+      }
+    }
   }
 
   return (
