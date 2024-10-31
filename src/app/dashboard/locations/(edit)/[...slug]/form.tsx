@@ -1,12 +1,11 @@
 "use client";
 
-import axios from "axios";
 import api from "@/app/api/api";
+import { useRouter } from "next/navigation";
 
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { locationSchema } from "@/schema/masters";
 
 import { Button } from "@/components/ui/button";
@@ -37,24 +36,19 @@ export default function EditLocationForm({ data }: { data: Location }) {
   async function onSubmit(values: z.infer<typeof locationSchema>) {
     toast.dismiss();
     try {
-      await api.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/locations/${data.id}`,
-        values
-      );
-      toast.success("Lokasi berhasil diedit");
+      await api.put(`locations/${data.id}`, values);
+      toast.success("Location successfully edited");
       router.back();
 
       setTimeout(() => {
         router.refresh();
       }, 500);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        toast.error(error.message);
-      } else {
-        toast.error(error instanceof Error ? error.message : "Unknown error");
-      }
+    } catch (error: unknown) {
+      console.log("error:", error);
+      toast.error("Failed to edit location");
     }
   }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -65,9 +59,9 @@ export default function EditLocationForm({ data }: { data: Location }) {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Office Name</FormLabel>
+                  <FormLabel>Location Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Kantor Pusat" {...field} />
+                    <Input placeholder="Enter place name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -80,9 +74,9 @@ export default function EditLocationForm({ data }: { data: Location }) {
               name="address"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Office Address</FormLabel>
+                  <FormLabel>Address</FormLabel>
                   <FormControl>
-                    <Input placeholder="Jl. Juanda" {...field} />
+                    <Input placeholder="Enter address" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -90,7 +84,7 @@ export default function EditLocationForm({ data }: { data: Location }) {
             />
           </div>
           <Button type="submit" className="w-full">
-            Create
+            Save Changes
           </Button>
         </div>
       </form>

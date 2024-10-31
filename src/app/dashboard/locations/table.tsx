@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import api from "@/app/api/api";
-import axios from "axios";
+import { useRouter } from "next/navigation";
 
 import { MoreHorizontal } from "lucide-react";
 import {
@@ -34,11 +34,10 @@ import {
 import { toast } from "sonner";
 
 import { LocationsTableProps } from "@/types/types";
-import { useRouter } from "next/navigation";
 import { generateSlug } from "@/lib/utils";
 
 export default function LocationsTable({
-  data,
+  datas,
   currentPage,
   perPage,
 }: LocationsTableProps) {
@@ -58,15 +57,12 @@ export default function LocationsTable({
   async function handleDelete(id: string) {
     toast.dismiss();
     try {
-      await api.delete(`${process.env.NEXT_PUBLIC_API_URL}/locations/${id}`);
-      toast.success("Lokasi berhasil dihapus");
+      await api.delete(`locations/${id}`);
+      toast.success("Location successfully deleted");
       router.refresh();
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        toast.error(error.message);
-      } else {
-        toast.error(error instanceof Error ? error.message : "Unknown error");
-      }
+    } catch (error: unknown) {
+      console.log("error:", error);
+      toast.error("Failed to delete location");
     } finally {
       setDeleteId(null);
     }
@@ -87,14 +83,14 @@ export default function LocationsTable({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((location, index) => {
+          {datas.map((data, index) => {
             const rowIndex = (currentPage - 1) * perPage + index + 1; // Calculate the actual index
             return (
-              <TableRow key={location.id}>
+              <TableRow key={data.id}>
                 <TableCell>{rowIndex}</TableCell>
-                <TableCell>{location.code}</TableCell>
-                <TableCell className="font-medium">{location.name}</TableCell>
-                <TableCell>{location.address}</TableCell>
+                <TableCell>{data.code}</TableCell>
+                <TableCell className="font-medium">{data.name}</TableCell>
+                <TableCell>{data.address}</TableCell>
                 <TableCell align="center">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -107,19 +103,17 @@ export default function LocationsTable({
                       <DropdownMenuLabel>Actions</DropdownMenuLabel>
                       <DropdownMenuItem
                         className="cursor-pointer"
-                        onClick={() => handleShow(location.id, location.name)}
+                        onClick={() => handleShow(data.id, data.name)}
                       >
                         Show
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         className="cursor-pointer"
-                        onClick={() => handleEdit(location.id, location.name)}
+                        onClick={() => handleEdit(data.id, data.name)}
                       >
                         Edit
                       </DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={() => setDeleteId(location.id)}
-                      >
+                      <DropdownMenuItem onClick={() => setDeleteId(data.id)}>
                         Delete
                       </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -148,7 +142,7 @@ export default function LocationsTable({
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction onClick={() => handleDelete(deleteId!)}>
-              Continue
+              Delete
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

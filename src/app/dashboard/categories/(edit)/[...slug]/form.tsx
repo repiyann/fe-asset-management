@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { locationSchema } from "@/schema/masters";
+import { masterDataSchema } from "@/schema/masters";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,26 +20,31 @@ import {
 } from "@/components/ui/form";
 import { toast } from "sonner";
 
-export default function CreateLocationForm() {
+import { Category } from "@/types/types";
+
+export default function EditCategoryForm({ data }: { data: Category }) {
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof locationSchema>>({
-    resolver: zodResolver(locationSchema),
+  const form = useForm<z.infer<typeof masterDataSchema>>({
+    resolver: zodResolver(masterDataSchema),
     defaultValues: {
-      name: "",
-      address: "",
+      name: data.name,
     },
   });
 
-  async function onSubmit(values: z.infer<typeof locationSchema>) {
+  async function onSubmit(values: z.infer<typeof masterDataSchema>) {
     toast.dismiss();
     try {
-      await api.post(`locations`, values);
-      toast.success("Location successfully created");
+      await api.put(`categories/${data.id}`, values);
+      toast.success("Category successfully edited");
       router.back();
+
+      setTimeout(() => {
+        router.refresh();
+      }, 500);
     } catch (error: unknown) {
       console.log("error:", error);
-      toast.error("Failed to create location");
+      toast.error("Failed to edit category");
     }
   }
 
@@ -53,24 +58,9 @@ export default function CreateLocationForm() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Location Name</FormLabel>
+                  <FormLabel>Category Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter place name" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="grid gap-2">
-            <FormField
-              control={form.control}
-              name="address"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Address</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter address" {...field} />
+                    <Input placeholder="Enter category name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -78,7 +68,7 @@ export default function CreateLocationForm() {
             />
           </div>
           <Button type="submit" className="w-full">
-            Create
+            Save Changes
           </Button>
         </div>
       </form>

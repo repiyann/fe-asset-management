@@ -3,11 +3,11 @@ import { redirect } from "next/navigation";
 
 import Navbar from "@/components/organism/navbar";
 import { SidebarInset } from "@/components/ui/sidebar";
-import LocationCard from "./card";
+import CategoryCard from "./card";
 
 import { ApiError } from "@/types/types";
 
-export default async function ShowLocation({
+export default async function ShowCategory({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -19,7 +19,7 @@ export default async function ShowLocation({
   let data;
   let message;
   try {
-    const response = await api.get(`locations/${id}`);
+    const response = await api.get(`categories/${id}`);
     data = response.data.data;
     message = response.data.message;
     console.log("message:", message);
@@ -27,14 +27,14 @@ export default async function ShowLocation({
     const apiError = error as ApiError;
     message = apiError.response?.data.message;
     console.log("message:", message);
-    redirect("/dashboard/locations");
+    redirect("/dashboard/categories");
   }
 
   return (
     <SidebarInset>
       <Navbar />
       <main className="p-6">
-        <LocationCard data={data} />
+        <CategoryCard data={data} />
       </main>
     </SidebarInset>
   );

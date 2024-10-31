@@ -14,13 +14,17 @@ interface Meta {
   previousPageUrl: string | null;
 }
 
-export interface Response<T> {
+export interface ResponsePaginated<T> {
   status: string;
   message: string;
   data: {
     meta: Meta;
     data: T;
   };
+}
+
+export interface ApiError {
+  response?: { data: { message: string } };
 }
 
 export interface Location {
@@ -31,7 +35,7 @@ export interface Location {
 }
 
 export interface LocationsTableProps {
-  data: Location[];
+  datas: Location[];
   currentPage: number;
   perPage: number;
 }
@@ -43,7 +47,19 @@ export interface Category {
 }
 
 export interface CategoriesTableProps {
-  data: Category[];
+  datas: Category[];
+  currentPage: number;
+  perPage: number;
+}
+
+export interface Depreciation {
+  id: string;
+  code: string;
+  name: string;
+}
+
+export interface DepreciationsTableProps {
+  datas: Depreciation[];
   currentPage: number;
   perPage: number;
 }

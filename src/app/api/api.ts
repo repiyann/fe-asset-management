@@ -16,11 +16,11 @@ api.interceptors.request.use(
     if (typeof window === "undefined") {
       const session = await getServerAuthSession();
       token = session?.user.token;
-      console.log('running on server')
+      console.log("running on server");
     } else {
       const session = await getSession();
       token = session?.user.token;
-      console.log('running on client')
+      console.log("running on client");
     }
 
     if (token) {
