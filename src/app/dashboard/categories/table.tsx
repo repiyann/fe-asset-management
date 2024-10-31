@@ -18,13 +18,13 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 
-import { LocationsTableProps } from "@/types/types"
+import { CategoriesTableProps } from "@/types/types"
 
-export default function LocationsTable({
+export default function CategoriesTable({
   data,
   currentPage,
   perPage,
-}: LocationsTableProps) {
+}: CategoriesTableProps) {
   return (
     <Table>
       <TableHeader>
@@ -32,21 +32,19 @@ export default function LocationsTable({
           <TableHead>No</TableHead>
           <TableHead>ID</TableHead>
           <TableHead>Name</TableHead>
-          <TableHead>Address</TableHead>
           <TableHead>
             <span className="sr-only">Actions</span>
           </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data.map((location, index) => {
+        {data.map((categoy, index) => {
           const rowIndex = (currentPage - 1) * perPage + index + 1; // Calculate the actual index
           return (
-            <TableRow key={location.id}>
+            <TableRow key={categoy.id}>
               <TableCell>{rowIndex}</TableCell>
-              <TableCell>{location.code}</TableCell>
-              <TableCell className="font-medium">{location.name}</TableCell>
-              <TableCell>{location.address}</TableCell>
+              <TableCell>{categoy.code}</TableCell>
+              <TableCell className="font-medium">{categoy.name}</TableCell>
               <TableCell align="center">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>

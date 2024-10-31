@@ -1,7 +1,3 @@
-import Navbar from "@/components/organism/navbar";
-import { SidebarInset } from "@/components/ui/sidebar";
-import LocationsTable from "./table";
-
 import { File, ListFilter, PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,23 +25,26 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import Navbar from "@/components/organism/navbar";
+import { SidebarInset } from "@/components/ui/sidebar";
 
+import CategoriesTable from "./table";
 import { getPaginationData } from "@/lib/pagination";
-import { Location, SearchParams } from "@/types/types";
+import { Category } from "@/types/types";
 
-export default async function Locations({
+export default async function Categories({
   searchParams,
 }: {
-  searchParams: SearchParams;
+  searchParams: { [key: string]: string | string[] | undefined | number };
 }) {
   const page = Number(searchParams.page) || 1;
-  const response = await getPaginationData<Location[]>("locations", {
+  const response = await getPaginationData<Category[]>("categories", {
     page,
   });
 
-  const { meta, data: locations } = response.data;
+  const { meta, data: categories } = response.data;
   const pageMetadata = meta;
-  const baseUrl = "/dashboard/locations";
+  const baseUrl = "/dashboard/categories";
 
   return (
     <SidebarInset>
@@ -86,14 +85,14 @@ export default async function Locations({
               <Button size="sm" className="h-7 gap-1">
                 <PlusCircle className="h-3.5 w-3.5" />
                 <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                  <a href="/dashboard/locations/create">Add Product</a>
+                  Add Product
                 </span>
               </Button>
             </div>
           </div>
           <CardContent>
-            <LocationsTable
-              data={locations}
+            <CategoriesTable
+              data={categories}
               currentPage={page}
               perPage={pageMetadata.perPage}
             />
