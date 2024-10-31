@@ -1,10 +1,9 @@
 import api from "@/app/api/api";
-import { LocationsResponse } from "@/types/locations"
+import { Response } from "@/types/types"
 
-export async function getLocations(options: {
+export async function getPaginationData<T>(url: string, options: {
   page?: number;
-}): Promise<LocationsResponse> {
-  let url = "locations";
+}): Promise<Response<T>> {
   const queryParams: string[] = [];
 
   if (options.page !== undefined || options.page !== null) {
@@ -16,5 +15,5 @@ export async function getLocations(options: {
   }
   const response = await api.get(url);
 
-  return response.data as LocationsResponse
+  return response.data as Response<T>
 }
