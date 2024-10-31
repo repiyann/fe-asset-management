@@ -1,5 +1,3 @@
-"use client";
-
 import Navbar from "@/components/organism/navbar"
 import { SidebarInset } from "@/components/ui/sidebar";
 
