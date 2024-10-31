@@ -7,6 +7,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
+import { loginSchema } from "@/schema/auth"
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,23 +21,18 @@ import {
 } from "@/components/ui/form";
 import { toast } from "sonner";
 
-const formSchema = z.object({
-  email: z.string().min(8).max(50).email(),
-  password: z.string().min(8).max(16),
-});
-
 export default function LoginForm() {
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof loginSchema>) {
     try {
       const result = signIn("credentials", {
         email: values.email,
@@ -58,7 +54,7 @@ export default function LoginForm() {
         },
       });
     } catch (error) {
-      toast.error("An unexpected error occurred");
+      toast.error(`An unexpected error occurred: ${error}`);
     }
   }
 

@@ -1,9 +1,13 @@
 "use client";
 
+import axios from "axios";
+import api from "@/app/api/api"
+
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { registerSchema } from "@/schema/auth"
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,27 +19,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import api from "@/app/api/api";
-import axios from "axios";
 import { toast } from "sonner";
-
-const formSchema = z
-  .object({
-    fullName: z.string().min(8).max(50),
-    email: z.string().min(8).max(50).email(),
-    password: z.string().min(8).max(16),
-    password_confirmation: z.string().min(8).max(16),
-  })
-  .refine((data) => data.password === data.password_confirmation, {
-    message: "Passwords must match",
-    path: ["password_confirmation"],
-  });
 
 export default function RegisterForm() {
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       fullName: "",
       email: "",
@@ -43,10 +33,10 @@ export default function RegisterForm() {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof registerSchema>) {
     toast.dismiss();
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, values);
+      await api.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, values);
       toast.success("Registrasi berhasil");
       router.push("/login");
     } catch (error) {
