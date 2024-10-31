@@ -1,5 +1,8 @@
 "use client";
 
+import { useRouter } from "next/navigation"
+import { signOut } from "next-auth/react"
+
 import {
   BadgeCheck,
   Bell,
@@ -40,8 +43,6 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import { sidebar } from "@/constant/sidebar";
-import { useRouter } from "next/navigation"
-import { signOut } from "next-auth/react"
 
 export default function DashboardSidebar() {
   const router = useRouter();

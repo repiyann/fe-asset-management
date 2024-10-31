@@ -1,6 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
+import { usePathname } from "next/navigation";
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -11,18 +13,36 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { usePathname } from "next/navigation";
-import { useMemo } from "react";
 
 export default function Navbar() {
   const pathname = usePathname();
 
+  function slugToTitle(slug: string) {
+    let title = slug.replace(/-/g, " ");
+    title = title.replace(/_/g, " - ");
+    title = title.charAt(0).toUpperCase() + title.slice(1);
+    return title;
+  }
+
   const breadcrumbs = useMemo(() => {
-    const paths = pathname.split("/").filter((x) => x);
-    return paths.map((path, index) => ({
-      name: path.charAt(0).toUpperCase() + path.slice(1),
-      href: `/${paths.slice(0, index + 1).join("/")}`,
-    }));
+    const cleanPathname = pathname.split("&id=")[0];
+    const paths = cleanPathname.split("/").filter((x) => x);
+    if (pathname.endsWith("/edit")) {
+      paths[paths.length] = "edit";
+    }
+
+    const href = pathname
+      .split("/")
+      .filter((x) => x)
+      .slice(0, -1);
+
+    return paths.map((path, index) => {
+      const title = slugToTitle(path);
+      return {
+        name: title,
+        href: `/${href.slice(0, index + 1).join("/")}`,
+      };
+    });
   }, [pathname]);
 
   return (
