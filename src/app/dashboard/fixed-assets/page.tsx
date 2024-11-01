@@ -51,8 +51,8 @@ export default async function FixedAssets({
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
         <Card x-chunk="dashboard-06-chunk-0">
           <CardHeader>
-            <CardTitle>Fixed Asset</CardTitle>
-            <CardDescription>Manage your fixed asset.</CardDescription>
+            <CardTitle>Fixed Assets</CardTitle>
+            <CardDescription>Manage your fixed assets.</CardDescription>
           </CardHeader>
           <div className="flex items-center pr-10">
             <div className="ml-auto flex items-center gap-2">

@@ -1,4 +1,4 @@
-import { BookOpen, Bot, Settings2, SquareTerminal } from "lucide-react";
+import { BookOpen, Bot, Settings2 } from "lucide-react";
 
 export const sidebar = {
   user: {
@@ -10,7 +10,7 @@ export const sidebar = {
     {
       title: "Masters",
       url: "#",
-      icon: SquareTerminal,
+      icon: BookOpen,
       isActive: true,
       items: [
         {

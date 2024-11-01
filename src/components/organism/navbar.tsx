@@ -20,7 +20,10 @@ export default function Navbar() {
   function slugToTitle(slug: string) {
     let title = slug.replace(/-/g, " ");
     title = title.replace(/_/g, " - ");
-    title = title.charAt(0).toUpperCase() + title.slice(1);
+    title = title
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
     return title;
   }
 

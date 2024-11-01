@@ -65,7 +65,7 @@ export default function DashboardSidebar() {
                   <Command className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">Acme Inc</span>
+                  <span className="truncate font-semibold">Sagara Mobile</span>
                   <span className="truncate text-xs">Enterprise</span>
                 </div>
               </a>
@@ -75,7 +75,7 @@ export default function DashboardSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Platform</SidebarGroupLabel>
+          <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
           <SidebarMenu>
             {sidebar.navMain.map((item) => (
               <Collapsible
