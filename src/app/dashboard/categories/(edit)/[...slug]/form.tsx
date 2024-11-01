@@ -20,9 +20,9 @@ import {
 } from "@/components/ui/form";
 import { toast } from "sonner";
 
-import { Category } from "@/types/types";
+import { MasterData } from "@/types/types";
 
-export default function EditCategoryForm({ data }: { data: Category }) {
+export default function EditCategoryForm({ data }: { data: MasterData }) {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof masterDataSchema>>({

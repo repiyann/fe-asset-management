@@ -34,13 +34,13 @@ import {
 import { toast } from "sonner";
 
 import { generateSlug } from "@/lib/utils";
-import { DepreciationsTableProps } from "@/types/types";
+import { MasterDataTableProps } from "@/types/types";
 
 export default function DepreciationsTable({
   datas,
   currentPage,
   perPage,
-}: DepreciationsTableProps) {
+}: MasterDataTableProps) {
   const router = useRouter();
   const [deleteId, setDeleteId] = useState<string | null>(null);
 

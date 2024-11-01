@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 
 import Navbar from "@/components/organism/navbar";
 import { SidebarInset } from "@/components/ui/sidebar";
-import EditCategoryForm from "./form";
+import EditFixedAssetForm from "./form";
 import {
   Card,
   CardContent,
@@ -14,7 +14,7 @@ import {
 
 import { MasterData } from "@/types/types";
 
-export default async function EditCategory({
+export default async function EditFixedAsset({
   params,
 }: {
   params: Promise<{ slug: string[] }>;
@@ -24,7 +24,7 @@ export default async function EditCategory({
   const id = separatedParams[1];
 
   return api
-    .get(`categories/${id}`)
+    .get(`fixed-assets/${id}`)
     .then(({ data }: { data: MasterData }) => {
       return (
         <SidebarInset>
@@ -32,11 +32,11 @@ export default async function EditCategory({
           <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
             <Card x-chunk="dashboard-06-chunk-0">
               <CardHeader>
-                <CardTitle>Category</CardTitle>
-                <CardDescription>Edit Category</CardDescription>
+                <CardTitle>Fixed Asset</CardTitle>
+                <CardDescription>Edit Fixed Asset</CardDescription>
               </CardHeader>
               <CardContent>
-                <EditCategoryForm data={data} />
+                <EditFixedAssetForm data={data} />
               </CardContent>
             </Card>
           </div>
@@ -44,6 +44,6 @@ export default async function EditCategory({
       );
     })
     .catch(() => {
-      redirect("/dashboard/categories");
+      redirect("/dashboard/fixed-assets");
     });
 }

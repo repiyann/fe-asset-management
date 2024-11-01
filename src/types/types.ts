@@ -36,26 +36,14 @@ export interface LocationsTableProps {
   perPage: number;
 }
 
-export interface Category {
+export interface MasterData {
   id: string;
   code: number;
   name: string;
 }
 
-export interface CategoriesTableProps {
-  datas: Category[];
-  currentPage: number;
-  perPage: number;
-}
-
-export interface Depreciation {
-  id: string;
-  code: string;
-  name: string;
-}
-
-export interface DepreciationsTableProps {
-  datas: Depreciation[];
+export interface MasterDataTableProps {
+  datas: MasterData[];
   currentPage: number;
   perPage: number;
 }

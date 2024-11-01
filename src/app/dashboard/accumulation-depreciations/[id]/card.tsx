@@ -22,25 +22,25 @@ import { toast } from "sonner";
 import { MasterData } from "@/types/types";
 import { generateSlug } from "@/lib/utils";
 
-export default function DepreciationCard({ data }: { data: MasterData }) {
+export default function AccuDepreciationCard({ data }: { data: MasterData }) {
   const router = useRouter();
 
   function handleEdit(id: string, name: string) {
     const slug = generateSlug(name);
-    router.push(`/dashboard/depreciations/${slug}&id=${id}/edit`);
+    router.push(`/dashboard/accu-depreciations/${slug}&id=${id}/edit`);
   }
 
   async function handleDelete(id: string) {
     toast.dismiss();
     api
-      .delete(`depreciations/${id}`)
+      .delete(`accu-depreciations/${id}`)
       .then(() => {
-        toast.success("Depreciation successfully deleted");
+        toast.success("Accumulation depreciation successfully deleted");
         router.back();
         router.refresh();
       })
       .catch((error) => {
-        toast.error(error.message || "Failed to delete depreciation");
+        toast.error(error.message || "Failed to delete accumulation depreciation");
       });
   }
 
@@ -73,7 +73,7 @@ export default function DepreciationCard({ data }: { data: MasterData }) {
                   <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                   <AlertDialogDescription>
                     This action cannot be undone. This will permanently delete
-                    this depreciation and remove its data from our servers.
+                    this accumulation depreciation and remove its data from our servers.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -89,12 +89,12 @@ export default function DepreciationCard({ data }: { data: MasterData }) {
       </div>
       <Card>
         <CardHeader>
-          <CardTitle>Depreciation Details</CardTitle>
+          <CardTitle>Accumulation Depreciation Details</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="grid gap-2">
             <div className="text-sm font-medium text-muted-foreground">
-              Depreciation Code
+              Accumulation Depreciation Code
             </div>
             <div className="flex items-center gap-2 text-lg font-medium">
               <Building2 className="h-5 w-5 text-muted-foreground" />
@@ -103,7 +103,7 @@ export default function DepreciationCard({ data }: { data: MasterData }) {
           </div>
           <div className="grid gap-2">
             <div className="text-sm font-medium text-muted-foreground">
-              Depreciation Name
+              Accumulation Depreciation Name
             </div>
             <div className="flex items-center gap-2 text-lg font-medium">
               <Building2 className="h-5 w-5 text-muted-foreground" />

@@ -3,11 +3,11 @@ import { redirect } from "next/navigation";
 
 import Navbar from "@/components/organism/navbar";
 import { SidebarInset } from "@/components/ui/sidebar";
-import DepreciationCard from "./card";
+import AccuDepreciationCard from "./card";
 
 import { MasterData } from "@/types/types";
 
-export default async function ShowDepreciation({
+export default async function ShowAccuDepreciation({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -17,18 +17,18 @@ export default async function ShowDepreciation({
   const id = separatedParams[1];
 
   return api
-    .get(`depreciations/${id}`)
+    .get(`accu-depreciations/${id}`)
     .then(({ data }: { data: MasterData }) => {
       return (
         <SidebarInset>
           <Navbar />
           <main className="p-6">
-            <DepreciationCard data={data} />
+            <AccuDepreciationCard data={data} />
           </main>
         </SidebarInset>
       );
     })
     .catch(() => {
-      redirect("/dashboard/depreciations");
+      redirect("/dashboard/accu-depreciations");
     });
 }

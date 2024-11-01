@@ -31,7 +31,7 @@ import {
 } from "@/components/ui/pagination";
 
 import { getPaginationData } from "@/lib/pagination";
-import { Category, SearchParams } from "@/types/types";
+import { MasterData, SearchParams } from "@/types/types";
 
 export default async function Categories({
   searchParams,
@@ -42,7 +42,7 @@ export default async function Categories({
   const baseUrl = "/dashboard/categories";
 
   const { meta: pageMetadata, data: datas } = await getPaginationData<
-    Category[]
+    MasterData[]
   >("categories", { page });
 
   return (

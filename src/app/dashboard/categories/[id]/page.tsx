@@ -4,7 +4,8 @@ import { redirect } from "next/navigation";
 import Navbar from "@/components/organism/navbar";
 import { SidebarInset } from "@/components/ui/sidebar";
 import CategoryCard from "./card";
-import { Category } from "@/types/types";
+
+import { MasterData } from "@/types/types";
 
 export default async function ShowCategory({
   params,
@@ -17,7 +18,7 @@ export default async function ShowCategory({
 
   return api
     .get(`categories/${id}`)
-    .then(({ data }: { data: Category }) => {
+    .then(({ data }: { data: MasterData }) => {
       return (
         <SidebarInset>
           <Navbar />

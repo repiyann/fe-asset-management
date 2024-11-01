@@ -19,10 +19,10 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 
-import { Category } from "@/types/types";
+import { MasterData } from "@/types/types";
 import { generateSlug } from "@/lib/utils";
 
-export default function CategoryCard({ data }: { data: Category }) {
+export default function CategoryCard({ data }: { data: MasterData }) {
   const router = useRouter();
 
   function handleEdit(id: string, name: string) {

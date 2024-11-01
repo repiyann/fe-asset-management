@@ -36,7 +36,7 @@ import { toast } from "sonner";
 import { generateSlug } from "@/lib/utils";
 import { MasterDataTableProps } from "@/types/types";
 
-export default function CategoriesTable({
+export default function AccuDepreciationsTable({
   datas,
   currentPage,
   perPage,
@@ -46,24 +46,24 @@ export default function CategoriesTable({
 
   function handleEdit(id: string, name: string) {
     const slug = generateSlug(name);
-    router.push(`/dashboard/categories/${slug}&id=${id}/edit`);
+    router.push(`/dashboard/accu-depreciations/${slug}&id=${id}/edit`);
   }
 
   function handleShow(id: string, name: string) {
     const slug = generateSlug(name);
-    router.push(`/dashboard/categories/${slug}&id=${id}`);
+    router.push(`/dashboard/accu-depreciations/${slug}&id=${id}`);
   }
 
   async function handleDelete(id: string) {
     toast.dismiss();
     api
-      .delete(`categories/${id}`)
+      .delete(`depreciations/${id}`)
       .then(() => {
-        toast.success("Category successfully deleted");
+        toast.success("Accumulation depreciation successfully deleted");
         router.refresh();
       })
       .catch((error) => {
-        toast.error(error.message || "Failed to delete category");
+        toast.error(error.message || "Failed to delete accumulation depreciation");
       })
       .finally(() => {
         setDeleteId(null);
@@ -134,7 +134,7 @@ export default function CategoriesTable({
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
               This action cannot be undone. This will permanently delete this
-              category and remove its data from our servers.
+              accumulation depreciation and remove its data from our servers.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

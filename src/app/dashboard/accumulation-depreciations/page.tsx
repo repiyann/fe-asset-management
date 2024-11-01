@@ -1,6 +1,6 @@
 import Navbar from "@/components/organism/navbar";
 import { SidebarInset } from "@/components/ui/sidebar";
-import DepreciationsTable from "./table";
+import AccuDepreciationsTable from "./table";
 
 import { File, ListFilter, PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -33,17 +33,17 @@ import {
 import { getPaginationData } from "@/lib/pagination";
 import { MasterData, SearchParams } from "@/types/types";
 
-export default async function Depreciations({
+export default async function AccuDepreciations({
   searchParams,
 }: {
   searchParams: SearchParams;
 }) {
   const page = Number(searchParams.page) || 1;
-  const baseUrl = "/dashboard/depreciations";
+  const baseUrl = "/dashboard/accu-depreciations";
 
   const { meta: pageMetadata, data: datas } = await getPaginationData<
     MasterData[]
-  >("depreciations", { page });
+  >("accu-depreciations", { page });
 
   return (
     <SidebarInset>
@@ -51,8 +51,8 @@ export default async function Depreciations({
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
         <Card x-chunk="dashboard-06-chunk-0">
           <CardHeader>
-            <CardTitle>Depreciations</CardTitle>
-            <CardDescription>Manage your depreciations.</CardDescription>
+            <CardTitle>Accumulation Depreciations</CardTitle>
+            <CardDescription>Manage your Accumulation Depreciations.</CardDescription>
           </CardHeader>
           <div className="flex items-center pr-10">
             <div className="ml-auto flex items-center gap-2">
@@ -84,7 +84,7 @@ export default async function Depreciations({
               <Button size="sm" className="h-7 gap-1">
                 <PlusCircle className="h-3.5 w-3.5" />
                 <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                  <a href="/dashboard/depreciations/create">Add Depreciation</a>
+                  <a href="/dashboard/accu-depreciations/create">Add Accumulation Depreciation</a>
                 </span>
               </Button>
             </div>
@@ -92,7 +92,7 @@ export default async function Depreciations({
           {datas.length !== 0 ? (
             <>
               <CardContent>
-                <DepreciationsTable
+                <AccuDepreciationsTable
                   datas={datas}
                   currentPage={page}
                   perPage={pageMetadata.perPage}
@@ -106,7 +106,7 @@ export default async function Depreciations({
                       ? pageMetadata.total
                       : pageMetadata.perPage}
                   </strong>{" "}
-                  of <strong>{pageMetadata.total}</strong> depreciations
+                  of <strong>{pageMetadata.total}</strong> accumulation depreciations
                 </div>
                 <div className="ml-auto">
                   <Pagination>

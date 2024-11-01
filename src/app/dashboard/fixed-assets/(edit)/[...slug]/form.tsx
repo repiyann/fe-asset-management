@@ -22,7 +22,7 @@ import { toast } from "sonner";
 
 import { MasterData } from "@/types/types";
 
-export default function EditDepreciationForm({ data }: { data: MasterData }) {
+export default function EditFixedAssetForm({ data }: { data: MasterData }) {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof masterDataSchema>>({
@@ -35,14 +35,14 @@ export default function EditDepreciationForm({ data }: { data: MasterData }) {
   async function onSubmit(values: z.infer<typeof masterDataSchema>) {
     toast.dismiss();
     api
-      .put(`depreciations/${data.id}`, values)
+      .put(`fixed-assets/${data.id}`, values)
       .then(() => {
-        toast.success("Depreciation successfully edited");
+        toast.success("Fixed asset successfully edited");
         router.back();
         router.refresh();
       })
       .catch((error) => {
-        toast.error(error.message || "Failed to edit depreciation");
+        toast.error(error.message || "Failed to edit fixed asset");
       });
   }
 
@@ -56,9 +56,9 @@ export default function EditDepreciationForm({ data }: { data: MasterData }) {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Depreciation Name</FormLabel>
+                  <FormLabel>Fixed Asset Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter depreciation name" {...field} />
+                    <Input placeholder="Enter fixed asset name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

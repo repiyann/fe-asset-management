@@ -20,29 +20,26 @@ import {
 } from "@/components/ui/form";
 import { toast } from "sonner";
 
-import { MasterData } from "@/types/types";
-
-export default function EditDepreciationForm({ data }: { data: MasterData }) {
+export default function CreateAccuDepreciationnForm() {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof masterDataSchema>>({
     resolver: zodResolver(masterDataSchema),
     defaultValues: {
-      name: data.name,
+      name: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof masterDataSchema>) {
     toast.dismiss();
     api
-      .put(`depreciations/${data.id}`, values)
+      .post(`accu-depreciations`, values)
       .then(() => {
-        toast.success("Depreciation successfully edited");
+        toast.success("Accumulation depreciationn successfully created");
         router.back();
-        router.refresh();
       })
       .catch((error) => {
-        toast.error(error.message || "Failed to edit depreciation");
+        toast.error(error.message || "Failed to create accumulation depreciationn");
       });
   }
 
@@ -56,9 +53,9 @@ export default function EditDepreciationForm({ data }: { data: MasterData }) {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Depreciation Name</FormLabel>
+                  <FormLabel>Accumulation Depreciationn Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter depreciation name" {...field} />
+                    <Input placeholder="Enter accumulation depreciationn name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -66,7 +63,7 @@ export default function EditDepreciationForm({ data }: { data: MasterData }) {
             />
           </div>
           <Button type="submit" className="w-full">
-            Save Changes
+            Create
           </Button>
         </div>
       </form>
