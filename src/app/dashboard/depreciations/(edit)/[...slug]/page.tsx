@@ -11,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Depreciation } from "@/types/types";
 
 export default async function EditDepreciation({
   params,
@@ -23,7 +24,7 @@ export default async function EditDepreciation({
 
   return api
     .get(`depreciations/${id}`)
-    .then(({ data }) => {
+    .then(({ data }: { data: Depreciation }) => {
       return (
         <SidebarInset>
           <Navbar />

@@ -11,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Category } from "@/types/types";
 
 export default async function EditCategory({
   params,
@@ -23,7 +24,7 @@ export default async function EditCategory({
 
   return api
     .get(`categories/${id}`)
-    .then(({ data }) => {
+    .then(({ data }: { data: Category }) => {
       return (
         <SidebarInset>
           <Navbar />

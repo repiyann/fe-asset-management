@@ -40,6 +40,8 @@ api.interceptors.response.use(
   },
   (error) => {
     if (error.response && error.response.data) {
+      console.log('tes', error.response)
+      console.log('tes2', error.response.data)
       return Promise.reject(new Error(error.response.data.message));
     } else {
       return Promise.reject(

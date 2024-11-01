@@ -28,15 +28,17 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const response = await api.post("/auth/login", credentials);
-        const { token, user } = response.data;
-        if (token && user) {
-          return {
-            ...user,
-            token: token.token,
-            fullName: user.fullName,
-          };
-        }
+        return api
+          .post("/auth/login", credentials)
+          .then(({ data: { token, user } }) => {
+            if (token && user) {
+              return {
+                ...user,
+                token: token.token,
+                fullName: user.fullName,
+              };
+            }
+          });
       },
     }),
   ],

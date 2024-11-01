@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import Navbar from "@/components/organism/navbar";
 import { SidebarInset } from "@/components/ui/sidebar";
 import LocationCard from "./card";
+import { Location } from "@/types/types";
 
 export default async function ShowLocation({
   params,
@@ -16,7 +17,7 @@ export default async function ShowLocation({
 
   return api
     .get(`locations/${id}`)
-    .then(({ data }) => {
+    .then(({ data }: { data: Location }) => {
       return (
         <SidebarInset>
           <Navbar />
