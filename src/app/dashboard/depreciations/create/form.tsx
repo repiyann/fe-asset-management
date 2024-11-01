@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/form";
 import { toast } from "sonner";
 
-export default function CreateCategoryForm() {
+export default function CreateDepreciationForm() {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof masterDataSchema>>({
@@ -33,13 +33,13 @@ export default function CreateCategoryForm() {
   async function onSubmit(values: z.infer<typeof masterDataSchema>) {
     toast.dismiss();
     api
-      .post(`categories`, values)
+      .post(`depreciations`, values)
       .then(() => {
-        toast.success("Category successfully created");
+        toast.success("Depreciation successfully created");
         router.back();
       })
       .catch((error) => {
-        toast.error(error.message || "Failed to create category");
+        toast.error(error.message || "Failed to create depreciation");
       });
   }
 
@@ -53,9 +53,9 @@ export default function CreateCategoryForm() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Category Name</FormLabel>
+                  <FormLabel>Depreciation Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter category name" {...field} />
+                    <Input placeholder="Enter depreciation name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

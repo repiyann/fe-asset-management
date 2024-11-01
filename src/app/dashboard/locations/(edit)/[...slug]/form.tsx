@@ -35,18 +35,16 @@ export default function EditLocationForm({ data }: { data: Location }) {
 
   async function onSubmit(values: z.infer<typeof locationSchema>) {
     toast.dismiss();
-    try {
-      await api.put(`locations/${data.id}`, values);
-      toast.success("Location successfully edited");
-      router.back();
-
-      setTimeout(() => {
+    api
+      .put(`locations/${data.id}`, values)
+      .then(() => {
+        toast.success("Location successfully edited");
+        router.back();
         router.refresh();
-      }, 500);
-    } catch (error: unknown) {
-      console.log("error:", error);
-      toast.error("Failed to edit location");
-    }
+      })
+      .catch((error) => {
+        toast.error(error.message || "Failed to edit location");
+      });
   }
 
   return (

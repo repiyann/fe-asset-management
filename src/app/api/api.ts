@@ -30,8 +30,22 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.error("Request error: ", error);
     return Promise.reject(error);
+  }
+);
+
+api.interceptors.response.use(
+  (response) => {
+    return response.data;
+  },
+  (error) => {
+    if (error.response && error.response.data) {
+      return Promise.reject(new Error(error.response.data.message));
+    } else {
+      return Promise.reject(
+        new Error(error.message || "Interval Server Error")
+      );
+    }
   }
 );
 

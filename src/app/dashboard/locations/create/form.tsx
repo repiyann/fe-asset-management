@@ -33,14 +33,15 @@ export default function CreateLocationForm() {
 
   async function onSubmit(values: z.infer<typeof locationSchema>) {
     toast.dismiss();
-    try {
-      await api.post(`locations`, values);
-      toast.success("Location successfully created");
-      router.back();
-    } catch (error: unknown) {
-      console.log("error:", error);
-      toast.error("Failed to create location");
-    }
+    api
+      .post(`locations`, values)
+      .then(() => {
+        toast.success("Location successfully created");
+        router.back();
+      })
+      .catch((error) => {
+        toast.error(error.message || "Failed to create location");
+      });
   }
 
   return (

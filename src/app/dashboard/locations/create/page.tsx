@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import CreateLocationForm from "./form"
 
-export default function CreateLocations() {
+export default function CreateLocation() {
   return (
     <SidebarInset>
       <Navbar />

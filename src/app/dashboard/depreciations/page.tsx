@@ -1,6 +1,6 @@
 import Navbar from "@/components/organism/navbar";
 import { SidebarInset } from "@/components/ui/sidebar";
-import CategoriesTable from "./table";
+import DepreciationsTable from "./table";
 
 import { File, ListFilter, PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -31,19 +31,19 @@ import {
 } from "@/components/ui/pagination";
 
 import { getPaginationData } from "@/lib/pagination";
-import { Category, SearchParams } from "@/types/types";
+import { Depreciation, SearchParams } from "@/types/types";
 
-export default async function Categories({
+export default async function Depreciations({
   searchParams,
 }: {
   searchParams: SearchParams;
 }) {
   const page = Number(searchParams.page) || 1;
-  const baseUrl = "/dashboard/categories";
+  const baseUrl = "/dashboard/depreciations";
 
   const { meta: pageMetadata, data: datas } = await getPaginationData<
-    Category[]
-  >("categories", { page });
+    Depreciation[]
+  >("depreciations", { page });
 
   return (
     <SidebarInset>
@@ -51,8 +51,8 @@ export default async function Categories({
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
         <Card x-chunk="dashboard-06-chunk-0">
           <CardHeader>
-            <CardTitle>Categories</CardTitle>
-            <CardDescription>Manage your categories.</CardDescription>
+            <CardTitle>Depreciations</CardTitle>
+            <CardDescription>Manage your depreciations.</CardDescription>
           </CardHeader>
           <div className="flex items-center pr-10">
             <div className="ml-auto flex items-center gap-2">
@@ -84,7 +84,7 @@ export default async function Categories({
               <Button size="sm" className="h-7 gap-1">
                 <PlusCircle className="h-3.5 w-3.5" />
                 <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                  <a href="/dashboard/categories/create">Add Category</a>
+                  <a href="/dashboard/depreciations/create">Add Depreciation</a>
                 </span>
               </Button>
             </div>
@@ -92,7 +92,7 @@ export default async function Categories({
           {datas.length !== 0 ? (
             <>
               <CardContent>
-                <CategoriesTable
+                <DepreciationsTable
                   datas={datas}
                   currentPage={page}
                   perPage={pageMetadata.perPage}
@@ -106,7 +106,7 @@ export default async function Categories({
                       ? pageMetadata.total
                       : pageMetadata.perPage}
                   </strong>{" "}
-                  of <strong>{pageMetadata.total}</strong> categories
+                  of <strong>{pageMetadata.total}</strong> depreciations
                 </div>
                 <div className="ml-auto">
                   <Pagination>

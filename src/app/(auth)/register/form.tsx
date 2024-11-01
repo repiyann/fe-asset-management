@@ -1,13 +1,12 @@
 "use client";
 
-import axios from "axios";
-import api from "@/app/api/api"
+import api from "@/app/api/api";
+import { useRouter } from "next/navigation";
 
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import { registerSchema } from "@/schema/auth"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registerSchema } from "@/schema/auth";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,17 +34,15 @@ export default function RegisterForm() {
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
     toast.dismiss();
-    try {
-      await api.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, values);
-      toast.success("Registrasi berhasil");
-      router.push("/login");
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        toast.error(error.message);
-      } else {
-        toast.error(error instanceof Error ? error.message : "Unknown error");
-      }
-    }
+    api
+      .post("auth/register", values)
+      .then(() => {
+        toast.success("Successfully registered");
+        router.push("/login");
+      })
+      .catch((error) => {
+        toast.error(error.message || "Failed to register");
+      });
   }
 
   return (
@@ -60,7 +57,7 @@ export default function RegisterForm() {
                 <FormItem>
                   <FormLabel>Fullname</FormLabel>
                   <FormControl>
-                    <Input placeholder="Max Verstappen" {...field} />
+                    <Input placeholder="Enter full name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -75,7 +72,7 @@ export default function RegisterForm() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="example@example.com" {...field} />
+                    <Input placeholder="Enter email" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -90,7 +87,11 @@ export default function RegisterForm() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="*********" {...field} />
+                    <Input
+                      type="password"
+                      placeholder="Enter password"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -105,7 +106,11 @@ export default function RegisterForm() {
                 <FormItem>
                   <FormLabel>Password Confirmation</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="*********" {...field} />
+                    <Input
+                      type="password"
+                      placeholder="Enter password confirmation"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

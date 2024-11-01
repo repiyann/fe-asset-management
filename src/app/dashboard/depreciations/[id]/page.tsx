@@ -3,9 +3,9 @@ import { redirect } from "next/navigation";
 
 import Navbar from "@/components/organism/navbar";
 import { SidebarInset } from "@/components/ui/sidebar";
-import CategoryCard from "./card";
+import DepreciationCard from "./card";
 
-export default async function ShowCategory({
+export default async function ShowDepreciation({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -15,18 +15,18 @@ export default async function ShowCategory({
   const id = separatedParams[1];
 
   return api
-    .get(`categories/${id}`)
+    .get(`depreciations/${id}`)
     .then(({ data }) => {
       return (
         <SidebarInset>
           <Navbar />
           <main className="p-6">
-            <CategoryCard data={data} />
+            <DepreciationCard data={data} />
           </main>
         </SidebarInset>
       );
     })
     .catch(() => {
-      redirect("/dashboard/categories");
+      redirect("/dashboard/depreciations");
     });
 }

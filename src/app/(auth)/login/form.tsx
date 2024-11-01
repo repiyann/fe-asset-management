@@ -4,10 +4,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema } from "@/schema/auth";
 import { signIn } from "next-auth/react";
-import { loginSchema } from "@/schema/auth"
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -33,29 +33,25 @@ export default function LoginForm() {
   });
 
   async function onSubmit(values: z.infer<typeof loginSchema>) {
-    try {
-      const result = signIn("credentials", {
-        email: values.email,
-        password: values.password,
-        redirect: false,
-      });
+    toast.dismiss();
 
-      toast.dismiss();
+    const result = signIn("credentials", {
+      email: values.email,
+      password: values.password,
+      redirect: false,
+    });
 
-      toast.promise(result, {
-        loading: "Loading...",
-        success: () => {
-          form.reset();
-          router.push("/dashboard");
-          return "Login Berhasil!";
-        },
-        error: () => {
-          return "Kredensial salah";
-        },
-      });
-    } catch (error) {
-      toast.error(`An unexpected error occurred: ${error}`);
-    }
+    toast.promise(result, {
+      loading: "Loading...",
+      success: () => {
+        form.reset();
+        router.push("/dashboard");
+        return "Successfully logged in";
+      },
+      error: () => {
+        return "Invalid credentials";
+      },
+    });
   }
 
   return (
@@ -70,7 +66,7 @@ export default function LoginForm() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="example@example.com" {...field} />
+                    <Input placeholder="Enter email" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -93,7 +89,11 @@ export default function LoginForm() {
                     </Link>
                   </div>
                   <FormControl>
-                    <Input type="password" placeholder="*********" {...field} />
+                    <Input
+                      type="password"
+                      placeholder="Enter password"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

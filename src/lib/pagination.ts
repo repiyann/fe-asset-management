@@ -1,9 +1,12 @@
 import api from "@/app/api/api";
-import { Response } from "@/types/types"
+import { ResponsePaginated } from "@/types/types";
 
-export async function getPaginationData<T>(url: string, options: {
-  page?: number;
-}): Promise<Response<T>> {
+export async function getPaginationData<T>(
+  url: string,
+  options: {
+    page?: number;
+  }
+): Promise<ResponsePaginated<T>> {
   const queryParams: string[] = [];
 
   if (options.page !== undefined || options.page !== null) {
@@ -15,5 +18,5 @@ export async function getPaginationData<T>(url: string, options: {
   }
   const response = await api.get(url);
 
-  return response.data as Response<T>
+  return response.data;
 }

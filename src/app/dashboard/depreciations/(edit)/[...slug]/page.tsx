@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 
 import Navbar from "@/components/organism/navbar";
 import { SidebarInset } from "@/components/ui/sidebar";
-import EditLocationForm from "./form";
+import EditDepreciationForm from "./form";
 import {
   Card,
   CardContent,
@@ -12,7 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export default async function EditLocation({
+export default async function EditDepreciation({
   params,
 }: {
   params: Promise<{ slug: string[] }>;
@@ -22,7 +22,7 @@ export default async function EditLocation({
   const id = separatedParams[1];
 
   return api
-    .get(`locations/${id}`)
+    .get(`depreciations/${id}`)
     .then(({ data }) => {
       return (
         <SidebarInset>
@@ -30,11 +30,11 @@ export default async function EditLocation({
           <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
             <Card x-chunk="dashboard-06-chunk-0">
               <CardHeader>
-                <CardTitle>Location</CardTitle>
-                <CardDescription>Edit location</CardDescription>
+                <CardTitle>Depreciation</CardTitle>
+                <CardDescription>Edit Depreciation</CardDescription>
               </CardHeader>
               <CardContent>
-                <EditLocationForm data={data} />
+                <EditDepreciationForm data={data} />
               </CardContent>
             </Card>
           </div>
@@ -42,6 +42,6 @@ export default async function EditLocation({
       );
     })
     .catch(() => {
-      redirect("/dashboard/locations");
+      redirect("/dashboard/depreciations");
     });
 }

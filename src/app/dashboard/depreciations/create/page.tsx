@@ -7,20 +7,20 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import CreateCategoryForm from "./form"
+import CreateDepreciationForm from "./form"
 
-export default function CreateCategory() {
+export default function CreateDepreciation() {
   return (
     <SidebarInset>
       <Navbar />
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
         <Card x-chunk="dashboard-06-chunk-0">
           <CardHeader>
-            <CardTitle>Category</CardTitle>
-            <CardDescription>Add new category</CardDescription>
+            <CardTitle>Depreciation</CardTitle>
+            <CardDescription>Add new depreciation</CardDescription>
           </CardHeader>
           <CardContent>
-            <CreateCategoryForm />
+            <CreateDepreciationForm />
           </CardContent>
         </Card>
       </div>

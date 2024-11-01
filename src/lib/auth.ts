@@ -28,20 +28,14 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const response = await api.post(
-          "/auth/login",
-          credentials
-        );
-
-        const { token, user } = response.data.data;
+        const response = await api.post("/auth/login", credentials);
+        const { token, user } = response.data;
         if (token && user) {
           return {
             ...user,
             token: token.token,
             fullName: user.fullName,
           };
-        } else {
-          throw new Error("Login failed");
         }
       },
     }),

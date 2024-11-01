@@ -34,36 +34,36 @@ import {
 import { toast } from "sonner";
 
 import { generateSlug } from "@/lib/utils";
-import { LocationsTableProps } from "@/types/types";
+import { DepreciationsTableProps } from "@/types/types";
 
-export default function LocationsTable({
+export default function DepreciationsTable({
   datas,
   currentPage,
   perPage,
-}: LocationsTableProps) {
+}: DepreciationsTableProps) {
   const router = useRouter();
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
   function handleEdit(id: string, name: string) {
     const slug = generateSlug(name);
-    router.push(`/dashboard/locations/${slug}&id=${id}/edit`);
+    router.push(`/dashboard/depreciations/${slug}&id=${id}/edit`);
   }
 
   function handleShow(id: string, name: string) {
     const slug = generateSlug(name);
-    router.push(`/dashboard/locations/${slug}&id=${id}`);
+    router.push(`/dashboard/depreciations/${slug}&id=${id}`);
   }
 
   async function handleDelete(id: string) {
     toast.dismiss();
     api
-      .delete(`locations/${id}`)
+      .delete(`depreciations/${id}`)
       .then(() => {
-        toast.success("Location successfully deleted");
+        toast.success("Depreciation successfully deleted");
         router.refresh();
       })
       .catch((error) => {
-        toast.error(error.message || "Failed to delete location");
+        toast.error(error.message || "Failed to delete depreciation");
       })
       .finally(() => {
         setDeleteId(null);
@@ -78,7 +78,6 @@ export default function LocationsTable({
             <TableHead>No</TableHead>
             <TableHead>ID</TableHead>
             <TableHead>Name</TableHead>
-            <TableHead>Address</TableHead>
             <TableHead>
               <span className="sr-only">Actions</span>
             </TableHead>
@@ -92,7 +91,6 @@ export default function LocationsTable({
                 <TableCell>{rowIndex}</TableCell>
                 <TableCell>{data.code}</TableCell>
                 <TableCell className="font-medium">{data.name}</TableCell>
-                <TableCell>{data.address}</TableCell>
                 <TableCell align="center">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -136,7 +134,7 @@ export default function LocationsTable({
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
               This action cannot be undone. This will permanently delete this
-              location and remove its data from our servers.
+              depreciation and remove its data from our servers.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

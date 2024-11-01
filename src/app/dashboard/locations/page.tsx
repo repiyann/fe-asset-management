@@ -39,13 +39,11 @@ export default async function Locations({
   searchParams: SearchParams;
 }) {
   const page = Number(searchParams.page) || 1;
-  const response = await getPaginationData<Location[]>("locations", {
-    page,
-  });
-
-  const { meta, data: datas } = response.data;
-  const pageMetadata = meta;
   const baseUrl = "/dashboard/locations";
+
+  const { meta: pageMetadata, data: datas } = await getPaginationData<
+    Location[]
+  >("locations", { page });
 
   return (
     <SidebarInset>
@@ -86,7 +84,7 @@ export default async function Locations({
               <Button size="sm" className="h-7 gap-1">
                 <PlusCircle className="h-3.5 w-3.5" />
                 <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                  <a href="/dashboard/locations/create">Add Product</a>
+                  <a href="/dashboard/locations/create">Add Location</a>
                 </span>
               </Button>
             </div>

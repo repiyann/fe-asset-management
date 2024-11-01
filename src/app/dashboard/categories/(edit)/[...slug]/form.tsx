@@ -34,18 +34,16 @@ export default function EditCategoryForm({ data }: { data: Category }) {
 
   async function onSubmit(values: z.infer<typeof masterDataSchema>) {
     toast.dismiss();
-    try {
-      await api.put(`categories/${data.id}`, values);
-      toast.success("Category successfully edited");
-      router.back();
-
-      setTimeout(() => {
+    api
+      .put(`categories/${data.id}`, values)
+      .then(() => {
+        toast.success("Category successfully edited");
+        router.back();
         router.refresh();
-      }, 500);
-    } catch (error: unknown) {
-      console.log("error:", error);
-      toast.error("Failed to edit category");
-    }
+      })
+      .catch((error) => {
+        toast.error(error.message || "Failed to edit category");
+      });
   }
 
   return (

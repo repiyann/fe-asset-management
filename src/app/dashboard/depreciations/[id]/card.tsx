@@ -3,7 +3,7 @@
 import api from "@/app/api/api";
 import { useRouter } from "next/navigation";
 
-import { ArrowLeft, Building2, MapPin, Pencil, Trash2 } from "lucide-react";
+import { ArrowLeft, Building2, Pencil, Trash2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,28 +19,28 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 
-import { Location } from "@/types/types";
+import { Depreciation } from "@/types/types";
 import { generateSlug } from "@/lib/utils";
 
-export default function LocationCard({ data }: { data: Location }) {
+export default function DepreciationCard({ data }: { data: Depreciation }) {
   const router = useRouter();
 
   function handleEdit(id: string, name: string) {
     const slug = generateSlug(name);
-    router.push(`/dashboard/locations/${slug}&id=${id}/edit`);
+    router.push(`/dashboard/depreciations/${slug}&id=${id}/edit`);
   }
 
   async function handleDelete(id: string) {
     toast.dismiss();
     api
-      .delete(`locations/${id}`)
+      .delete(`depreciations/${id}`)
       .then(() => {
-        toast.success("Location successfully deleted");
+        toast.success("Depreciation successfully deleted");
         router.back();
         router.refresh();
       })
       .catch((error) => {
-        toast.error(error.message || "Failed to delete location");
+        toast.error(error.message || "Failed to delete depreciation");
       });
   }
 
@@ -73,7 +73,7 @@ export default function LocationCard({ data }: { data: Location }) {
                   <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                   <AlertDialogDescription>
                     This action cannot be undone. This will permanently delete
-                    this location and remove its data from our servers.
+                    this depreciation and remove its data from our servers.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -89,25 +89,16 @@ export default function LocationCard({ data }: { data: Location }) {
       </div>
       <Card>
         <CardHeader>
-          <CardTitle>Location Details</CardTitle>
+          <CardTitle>Depreciation Details</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="grid gap-2">
             <div className="text-sm font-medium text-muted-foreground">
-              Location Name
+              Depreciation Name
             </div>
             <div className="flex items-center gap-2 text-lg font-medium">
               <Building2 className="h-5 w-5 text-muted-foreground" />
               {data.name}
-            </div>
-          </div>
-          <div className="grid gap-2">
-            <div className="text-sm font-medium text-muted-foreground">
-              Address
-            </div>
-            <div className="flex items-center gap-2">
-              <MapPin className="h-5 w-5 text-muted-foreground" />
-              {data.address}
             </div>
           </div>
         </CardContent>

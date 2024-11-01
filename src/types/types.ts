@@ -15,12 +15,8 @@ interface Meta {
 }
 
 export interface ResponsePaginated<T> {
-  status: string;
-  message: string;
-  data: {
-    meta: Meta;
-    data: T;
-  };
+  meta: Meta;
+  data: T;
 }
 
 export interface ApiError {

@@ -33,8 +33,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 
-import { CategoriesTableProps } from "@/types/types";
 import { generateSlug } from "@/lib/utils";
+import { CategoriesTableProps } from "@/types/types";
 
 export default function CategoriesTable({
   datas,
@@ -56,16 +56,18 @@ export default function CategoriesTable({
 
   async function handleDelete(id: string) {
     toast.dismiss();
-    try {
-      await api.delete(`categories/${id}`);
-      toast.success("Category successfully deleted");
-      router.refresh();
-    } catch (error: unknown) {
-      console.log("error:", error);
-      toast.error("Failed to delete category");
-    } finally {
-      setDeleteId(null);
-    }
+    api
+      .delete(`categories/${id}`)
+      .then(() => {
+        toast.success("Category successfully deleted");
+        router.refresh();
+      })
+      .catch((error) => {
+        toast.error(error.message || "Failed to delete category");
+      })
+      .finally(() => {
+        setDeleteId(null);
+      });
   }
 
   return (
@@ -132,7 +134,7 @@ export default function CategoriesTable({
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
               This action cannot be undone. This will permanently delete this
-              ategory and remove its data from our servers.
+              category and remove its data from our servers.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

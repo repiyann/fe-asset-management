@@ -6,6 +6,17 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Building2, Pencil, Trash2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 
 import { Category } from "@/types/types";
@@ -21,18 +32,16 @@ export default function CategoryCard({ data }: { data: Category }) {
 
   async function handleDelete(id: string) {
     toast.dismiss();
-    try {
-      await api.delete(`categories/${id}`);
-      toast.success("Category successfully deleted");
-      router.back();
-
-      setTimeout(() => {
+    api
+      .delete(`categories/${id}`)
+      .then(() => {
+        toast.success("Category successfully deleted");
+        router.back();
         router.refresh();
-      }, 500);
-    } catch (error: unknown) {
-      console.log("error:", error);
-      toast.error("Failed to delete category");
-    }
+      })
+      .catch((error) => {
+        toast.error(error.message || "Failed to delete category");
+      });
   }
 
   return (
@@ -52,14 +61,29 @@ export default function CategoryCard({ data }: { data: Category }) {
               <Pencil className="mr-2 h-4 w-4" />
               Edit
             </Button>
-            <Button
-              variant="destructive"
-              size="sm"
-              onClick={() => handleDelete(data.id)}
-            >
-              <Trash2 className="mr-2 h-4 w-4" />
-              Delete
-            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="destructive" size="sm">
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  Delete
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete
+                    this category and remove its data from our servers.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={() => handleDelete(data.id)}>
+                    Delete
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </div>
       </div>

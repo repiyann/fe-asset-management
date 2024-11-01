@@ -20,26 +20,29 @@ import {
 } from "@/components/ui/form";
 import { toast } from "sonner";
 
-export default function CreateCategoryForm() {
+import { Depreciation } from "@/types/types";
+
+export default function EditDepreciationForm({ data }: { data: Depreciation }) {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof masterDataSchema>>({
     resolver: zodResolver(masterDataSchema),
     defaultValues: {
-      name: "",
+      name: data.name,
     },
   });
 
   async function onSubmit(values: z.infer<typeof masterDataSchema>) {
     toast.dismiss();
     api
-      .post(`categories`, values)
+      .put(`depreciations/${data.id}`, values)
       .then(() => {
-        toast.success("Category successfully created");
+        toast.success("Depreciation successfully edited");
         router.back();
+        router.refresh();
       })
       .catch((error) => {
-        toast.error(error.message || "Failed to create category");
+        toast.error(error.message || "Failed to edit depreciation");
       });
   }
 
@@ -53,9 +56,9 @@ export default function CreateCategoryForm() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Category Name</FormLabel>
+                  <FormLabel>Depreciation Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter category name" {...field} />
+                    <Input placeholder="Enter depreciation name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -63,7 +66,7 @@ export default function CreateCategoryForm() {
             />
           </div>
           <Button type="submit" className="w-full">
-            Create
+            Save Changes
           </Button>
         </div>
       </form>
