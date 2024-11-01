@@ -76,7 +76,7 @@ export default function DepreciationsTable({
         <TableHeader>
           <TableRow>
             <TableHead>No</TableHead>
-            <TableHead>ID</TableHead>
+            <TableHead>Code</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>
               <span className="sr-only">Actions</span>

@@ -94,6 +94,15 @@ export default function LocationCard({ data }: { data: Location }) {
         <CardContent className="grid gap-4">
           <div className="grid gap-2">
             <div className="text-sm font-medium text-muted-foreground">
+              Location Code
+            </div>
+            <div className="flex items-center gap-2 text-lg font-medium">
+              <Building2 className="h-5 w-5 text-muted-foreground" />
+              {data.code}
+            </div>
+          </div>
+          <div className="grid gap-2">
+            <div className="text-sm font-medium text-muted-foreground">
               Location Name
             </div>
             <div className="flex items-center gap-2 text-lg font-medium">

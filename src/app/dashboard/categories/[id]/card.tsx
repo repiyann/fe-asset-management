@@ -92,6 +92,15 @@ export default function CategoryCard({ data }: { data: Category }) {
           <CardTitle>Category Details</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4">
+        <div className="grid gap-2">
+            <div className="text-sm font-medium text-muted-foreground">
+              Category Code
+            </div>
+            <div className="flex items-center gap-2 text-lg font-medium">
+              <Building2 className="h-5 w-5 text-muted-foreground" />
+              {data.code}
+            </div>
+          </div>
           <div className="grid gap-2">
             <div className="text-sm font-medium text-muted-foreground">
               Category Name

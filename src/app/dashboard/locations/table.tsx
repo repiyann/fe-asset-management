@@ -76,7 +76,7 @@ export default function LocationsTable({
         <TableHeader>
           <TableRow>
             <TableHead>No</TableHead>
-            <TableHead>ID</TableHead>
+            <TableHead>Code</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Address</TableHead>
             <TableHead>
