@@ -37,9 +37,12 @@ export default async function Categories({ searchParams }: { searchParams: Searc
   const page = Number(searchParams.page) || 1
   const baseUrl = '/dashboard/categories'
 
-  const { meta: pageMetadata, data: datas } = await getPaginationData<MasterData[]>('categories', {
-    page,
-  })
+  const { meta: pageMetadata, data: datas } = await getPaginationData<MasterData[]>(
+    'categories-paginated',
+    {
+      page,
+    }
+  )
 
   return (
     <SidebarInset>

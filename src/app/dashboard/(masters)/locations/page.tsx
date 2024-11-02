@@ -37,9 +37,12 @@ export default async function Locations({ searchParams }: { searchParams: Search
   const page = Number(searchParams.page) || 1
   const baseUrl = '/dashboard/locations'
 
-  const { meta: pageMetadata, data: datas } = await getPaginationData<Location[]>('locations', {
-    page,
-  })
+  const { meta: pageMetadata, data: datas } = await getPaginationData<Location[]>(
+    'locations-paginated',
+    {
+      page,
+    }
+  )
 
   return (
     <SidebarInset>

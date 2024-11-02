@@ -38,7 +38,7 @@ export default async function FixedAssets({ searchParams }: { searchParams: Sear
   const baseUrl = '/dashboard/fixed-assets'
 
   const { meta: pageMetadata, data: datas } = await getPaginationData<MasterData[]>(
-    'fixed-assets',
+    'fixed-assets-paginated',
     { page }
   )
 

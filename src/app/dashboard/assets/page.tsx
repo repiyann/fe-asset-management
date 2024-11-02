@@ -1,6 +1,6 @@
 import Navbar from '@/components/organism/navbar'
 import { SidebarInset } from '@/components/ui/sidebar'
-import AccuDepreciationsTable from './table'
+import LocationsTable from './table'
 
 import { File, ListFilter, PlusCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -31,16 +31,15 @@ import {
 } from '@/components/ui/pagination'
 
 import { getPaginationData } from '@/lib/pagination'
-import { MasterData, SearchParams } from '@/types/types'
+import { Asset, SearchParams } from '@/types/types'
 
-export default async function AccuDepreciations({ searchParams }: { searchParams: SearchParams }) {
+export default async function Assets({ searchParams }: { searchParams: SearchParams }) {
   const page = Number(searchParams.page) || 1
-  const baseUrl = '/dashboard/accu-depreciations'
+  const baseUrl = '/dashboard/assets'
 
-  const { meta: pageMetadata, data: datas } = await getPaginationData<MasterData[]>(
-    'accu-depreciations-paginated',
-    { page }
-  )
+  const { meta: pageMetadata, data: datas } = await getPaginationData<Asset[]>('assets-paginated', {
+    page,
+  })
 
   return (
     <SidebarInset>
@@ -48,8 +47,8 @@ export default async function AccuDepreciations({ searchParams }: { searchParams
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
         <Card x-chunk="dashboard-06-chunk-0">
           <CardHeader>
-            <CardTitle>Accumulation Depreciations</CardTitle>
-            <CardDescription>Manage your Accumulation Depreciations.</CardDescription>
+            <CardTitle>Assets</CardTitle>
+            <CardDescription>Manage your office assets.</CardDescription>
           </CardHeader>
           <div className="flex items-center pr-10">
             <div className="ml-auto flex items-center gap-2">
@@ -75,7 +74,7 @@ export default async function AccuDepreciations({ searchParams }: { searchParams
               <Button size="sm" className="h-7 gap-1">
                 <PlusCircle className="h-3.5 w-3.5" />
                 <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                  <a href="/dashboard/accu-depreciations/create">Add Accumulation Depreciation</a>
+                  <a href="/dashboard/assets/create">Add Asset</a>
                 </span>
               </Button>
             </div>
@@ -83,11 +82,7 @@ export default async function AccuDepreciations({ searchParams }: { searchParams
           {datas.length !== 0 ? (
             <>
               <CardContent>
-                <AccuDepreciationsTable
-                  datas={datas}
-                  currentPage={page}
-                  perPage={pageMetadata.perPage}
-                />
+                <LocationsTable datas={datas} currentPage={page} perPage={pageMetadata.perPage} />
               </CardContent>
               <CardFooter className="flex justify-between items-center">
                 <div className="text-xs text-muted-foreground">
@@ -95,7 +90,7 @@ export default async function AccuDepreciations({ searchParams }: { searchParams
                   <strong>
                     {pageMetadata.total < 10 ? pageMetadata.total : pageMetadata.perPage}
                   </strong>{' '}
-                  of <strong>{pageMetadata.total}</strong> accumulation depreciations
+                  of <strong>{pageMetadata.total}</strong> assets
                 </div>
                 <div className="ml-auto">
                   <Pagination>

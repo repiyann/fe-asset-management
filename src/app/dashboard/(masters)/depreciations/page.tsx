@@ -38,7 +38,7 @@ export default async function Depreciations({ searchParams }: { searchParams: Se
   const baseUrl = '/dashboard/depreciations'
 
   const { meta: pageMetadata, data: datas } = await getPaginationData<MasterData[]>(
-    'depreciations',
+    'depreciations-paginated',
     { page }
   )
 
