@@ -31,8 +31,9 @@ export const sidebarCollapsible = {
 }
 
 export const sidebar = [
-  { title: 'Transactions', url: '/transactions', icon: Settings2 },
-  { title: 'History Transactions', url: '/history-transactions', icon: Settings2 },
+  { title: 'Assets', url: '/dashboard/assets', icon: Settings2 },
+  { title: 'Transactions', url: '/dashboard/transactions', icon: Settings2 },
+  { title: 'History Transactions', url: '/dashboard/history-transactions', icon: Settings2 },
 ]
 
 export const geistSans = localFont({
