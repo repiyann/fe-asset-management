@@ -1,7 +1,7 @@
-"use client";
+'use client'
 
-import React, { useMemo } from "react";
-import { usePathname } from "next/navigation";
+import React, { useMemo } from 'react'
+import { usePathname } from 'next/navigation'
 
 import {
   Breadcrumb,
@@ -10,43 +10,43 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Separator } from "@/components/ui/separator";
-import { SidebarTrigger } from "@/components/ui/sidebar";
+} from '@/components/ui/breadcrumb'
+import { Separator } from '@/components/ui/separator'
+import { SidebarTrigger } from '@/components/ui/sidebar'
 
 export default function Navbar() {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   function slugToTitle(slug: string) {
-    let title = slug.replace(/-/g, " ");
-    title = title.replace(/_/g, " - ");
+    let title = slug.replace(/-/g, ' ')
+    title = title.replace(/_/g, ' - ')
     title = title
-      .split(" ")
+      .split(' ')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-    return title;
+      .join(' ')
+    return title
   }
 
   const breadcrumbs = useMemo(() => {
-    const cleanPathname = pathname.split("&id=")[0];
-    const paths = cleanPathname.split("/").filter((x) => x);
-    if (pathname.endsWith("/edit")) {
-      paths[paths.length] = "edit";
+    const cleanPathname = pathname.split('&id=')[0]
+    const paths = cleanPathname.split('/').filter((x) => x)
+    if (pathname.endsWith('/edit')) {
+      paths[paths.length] = 'edit'
     }
 
     const href = pathname
-      .split("/")
+      .split('/')
       .filter((x) => x)
-      .slice(0, -1);
+      .slice(0, -1)
 
     return paths.map((path, index) => {
-      const title = slugToTitle(path);
+      const title = slugToTitle(path)
       return {
         name: title,
-        href: `/${href.slice(0, index + 1).join("/")}`,
-      };
-    });
-  }, [pathname]);
+        href: `/${href.slice(0, index + 1).join('/')}`,
+      }
+    })
+  }, [pathname])
 
   return (
     <header className="flex h-16 shrink-0 items-center gap-2">
@@ -58,24 +58,17 @@ export default function Navbar() {
             {breadcrumbs.slice(0, -1).map((breadcrumb, index) => (
               <React.Fragment key={breadcrumb.href}>
                 <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href={breadcrumb.href}>
-                    {breadcrumb.name}
-                  </BreadcrumbLink>
+                  <BreadcrumbLink href={breadcrumb.href}>{breadcrumb.name}</BreadcrumbLink>
                 </BreadcrumbItem>
-                <BreadcrumbSeparator
-                  className="hidden md:block"
-                  key={`separator-${index}`}
-                />
+                <BreadcrumbSeparator className="hidden md:block" key={`separator-${index}`} />
               </React.Fragment>
             ))}
             <BreadcrumbItem>
-              <BreadcrumbPage>
-                {breadcrumbs[breadcrumbs.length - 1]?.name}
-              </BreadcrumbPage>
+              <BreadcrumbPage>{breadcrumbs[breadcrumbs.length - 1]?.name}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
       </div>
     </header>
-  );
+  )
 }

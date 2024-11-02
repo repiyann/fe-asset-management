@@ -1,15 +1,15 @@
-"use client";
+'use client'
 
-import api from "@/app/api/api";
-import { useRouter } from "next/navigation";
+import api from '@/app/api/api'
+import { useRouter } from 'next/navigation'
 
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { registerSchema } from "@/schema/auth";
+import { z } from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { registerSchema } from '@/schema/auth'
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import {
   Form,
   FormControl,
@@ -17,32 +17,32 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { toast } from "sonner";
+} from '@/components/ui/form'
+import { toast } from 'sonner'
 
 export default function RegisterForm() {
-  const router = useRouter();
+  const router = useRouter()
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      fullName: "",
-      email: "",
-      password: "",
+      fullName: '',
+      email: '',
+      password: '',
     },
-  });
+  })
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
-    toast.dismiss();
+    toast.dismiss()
     api
-      .post("auth/register", values)
+      .post('auth/register', values)
       .then(() => {
-        toast.success("Successfully registered");
-        router.push("/login");
+        toast.success('Successfully registered')
+        router.push('/login')
       })
       .catch((error) => {
-        toast.error(error.message || "Failed to register");
-      });
+        toast.error(error.message || 'Failed to register')
+      })
   }
 
   return (
@@ -87,11 +87,7 @@ export default function RegisterForm() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
-                      placeholder="Enter password"
-                      {...field}
-                    />
+                    <Input type="password" placeholder="Enter password" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -106,11 +102,7 @@ export default function RegisterForm() {
                 <FormItem>
                   <FormLabel>Password Confirmation</FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
-                      placeholder="Enter password confirmation"
-                      {...field}
-                    />
+                    <Input type="password" placeholder="Enter password confirmation" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -123,5 +115,5 @@ export default function RegisterForm() {
         </div>
       </form>
     </Form>
-  );
+  )
 }

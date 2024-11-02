@@ -1,9 +1,9 @@
-import Navbar from "@/components/organism/navbar";
-import { SidebarInset } from "@/components/ui/sidebar";
-import CategoriesTable from "./table";
+import Navbar from '@/components/organism/navbar'
+import { SidebarInset } from '@/components/ui/sidebar'
+import CategoriesTable from './table'
 
-import { File, ListFilter, PlusCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { File, ListFilter, PlusCircle } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -11,7 +11,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from '@/components/ui/card'
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -19,7 +19,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu'
 import {
   Pagination,
   PaginationContent,
@@ -28,22 +28,18 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
+} from '@/components/ui/pagination'
 
-import { getPaginationData } from "@/lib/pagination";
-import { MasterData, SearchParams } from "@/types/types";
+import { getPaginationData } from '@/lib/pagination'
+import { MasterData, SearchParams } from '@/types/types'
 
-export default async function Categories({
-  searchParams,
-}: {
-  searchParams: SearchParams;
-}) {
-  const page = Number(searchParams.page) || 1;
-  const baseUrl = "/dashboard/categories";
+export default async function Categories({ searchParams }: { searchParams: SearchParams }) {
+  const page = Number(searchParams.page) || 1
+  const baseUrl = '/dashboard/categories'
 
-  const { meta: pageMetadata, data: datas } = await getPaginationData<
-    MasterData[]
-  >("categories", { page });
+  const { meta: pageMetadata, data: datas } = await getPaginationData<MasterData[]>('categories', {
+    page,
+  })
 
   return (
     <SidebarInset>
@@ -60,26 +56,20 @@ export default async function Categories({
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm" className="h-7 gap-1">
                     <ListFilter className="h-3.5 w-3.5" />
-                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                      Filter
-                    </span>
+                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Filter</span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>Filter by</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuCheckboxItem checked>
-                    Active
-                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem checked>Active</DropdownMenuCheckboxItem>
                   <DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
                   <DropdownMenuCheckboxItem>Archived</DropdownMenuCheckboxItem>
                 </DropdownMenuContent>
               </DropdownMenu>
               <Button size="sm" variant="outline" className="h-7 gap-1">
                 <File className="h-3.5 w-3.5" />
-                <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                  Export
-                </span>
+                <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Export</span>
               </Button>
               <Button size="sm" className="h-7 gap-1">
                 <PlusCircle className="h-3.5 w-3.5" />
@@ -92,20 +82,14 @@ export default async function Categories({
           {datas.length !== 0 ? (
             <>
               <CardContent>
-                <CategoriesTable
-                  datas={datas}
-                  currentPage={page}
-                  perPage={pageMetadata.perPage}
-                />
+                <CategoriesTable datas={datas} currentPage={page} perPage={pageMetadata.perPage} />
               </CardContent>
               <CardFooter className="flex justify-between items-center">
                 <div className="text-xs text-muted-foreground">
-                  Showing <strong>1</strong> to{" "}
+                  Showing <strong>1</strong> to{' '}
                   <strong>
-                    {pageMetadata.total < 10
-                      ? pageMetadata.total
-                      : pageMetadata.perPage}
-                  </strong>{" "}
+                    {pageMetadata.total < 10 ? pageMetadata.total : pageMetadata.perPage}
+                  </strong>{' '}
                   of <strong>{pageMetadata.total}</strong> categories
                 </div>
                 <div className="ml-auto">
@@ -113,14 +97,8 @@ export default async function Categories({
                     <PaginationContent>
                       <PaginationItem>
                         <PaginationPrevious
-                          href={
-                            page > 1 ? `${baseUrl}?page=${page - 1}` : undefined
-                          }
-                          className={
-                            page > pageMetadata.firstPage
-                              ? ""
-                              : "cursor-default"
-                          }
+                          href={page > 1 ? `${baseUrl}?page=${page - 1}` : undefined}
+                          className={page > pageMetadata.firstPage ? '' : 'cursor-default'}
                         />
                       </PaginationItem>
                       {pageMetadata.lastPage > 5 ? (
@@ -145,38 +123,29 @@ export default async function Categories({
                             <PaginationEllipsis />
                           </PaginationItem>
                           <PaginationItem>
-                            <PaginationLink
-                              href={`${baseUrl}?page=${pageMetadata.lastPage}`}
-                            >
+                            <PaginationLink href={`${baseUrl}?page=${pageMetadata.lastPage}`}>
                               {pageMetadata.lastPage}
                             </PaginationLink>
                           </PaginationItem>
                         </>
                       ) : (
-                        Array.from(
-                          { length: pageMetadata.lastPage },
-                          (_, i) => (
-                            <PaginationItem key={i}>
-                              <PaginationLink
-                                href={`${baseUrl}?page=${i + 1}`}
-                                isActive={pageMetadata.currentPage === i + 1}
-                              >
-                                {i + 1}
-                              </PaginationLink>
-                            </PaginationItem>
-                          )
-                        )
+                        Array.from({ length: pageMetadata.lastPage }, (_, i) => (
+                          <PaginationItem key={i}>
+                            <PaginationLink
+                              href={`${baseUrl}?page=${i + 1}`}
+                              isActive={pageMetadata.currentPage === i + 1}
+                            >
+                              {i + 1}
+                            </PaginationLink>
+                          </PaginationItem>
+                        ))
                       )}
                       <PaginationItem>
                         <PaginationNext
                           href={
-                            page < pageMetadata.lastPage
-                              ? `${baseUrl}?page=${page + 1}`
-                              : undefined
+                            page < pageMetadata.lastPage ? `${baseUrl}?page=${page + 1}` : undefined
                           }
-                          className={
-                            page < pageMetadata.lastPage ? "" : "cursor-default"
-                          }
+                          className={page < pageMetadata.lastPage ? '' : 'cursor-default'}
                         />
                       </PaginationItem>
                     </PaginationContent>
@@ -186,13 +155,11 @@ export default async function Categories({
             </>
           ) : (
             <>
-              <div className="text-center text-muted-foreground mb-10 pt-5">
-                Record empty
-              </div>
+              <div className="text-center text-muted-foreground mb-10 pt-5">Record empty</div>
             </>
           )}
         </Card>
       </div>
     </SidebarInset>
-  );
+  )
 }

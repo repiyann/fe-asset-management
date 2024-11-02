@@ -1,13 +1,7 @@
-import Navbar from "@/components/organism/navbar";
-import { SidebarInset } from "@/components/ui/sidebar";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import CreateCategoryForm from "./form"
+import Navbar from '@/components/organism/navbar'
+import { SidebarInset } from '@/components/ui/sidebar'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import CreateCategoryForm from './form'
 
 export default function CreateCategory() {
   return (
@@ -25,5 +19,5 @@ export default function CreateCategory() {
         </Card>
       </div>
     </SidebarInset>
-  );
+  )
 }

@@ -1,15 +1,15 @@
-"use client";
+'use client'
 
-import api from "@/app/api/api";
-import { useRouter } from "next/navigation";
+import api from '@/app/api/api'
+import { useRouter } from 'next/navigation'
 
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { locationSchema } from "@/schema/masters";
+import { z } from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { locationSchema } from '@/schema/masters'
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import {
   Form,
   FormControl,
@@ -17,31 +17,31 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { toast } from "sonner";
+} from '@/components/ui/form'
+import { toast } from 'sonner'
 
 export default function CreateLocationForm() {
-  const router = useRouter();
+  const router = useRouter()
 
   const form = useForm<z.infer<typeof locationSchema>>({
     resolver: zodResolver(locationSchema),
     defaultValues: {
-      name: "",
-      address: "",
+      name: '',
+      address: '',
     },
-  });
+  })
 
   async function onSubmit(values: z.infer<typeof locationSchema>) {
-    toast.dismiss();
+    toast.dismiss()
     api
-      .post(`locations`, values)
+      .post('locations', values)
       .then(() => {
-        toast.success("Location successfully created");
-        router.back();
+        toast.success('Location successfully created')
+        router.back()
       })
       .catch((error) => {
-        toast.error(error.message || "Failed to create location");
-      });
+        toast.error(error.message || 'Failed to create location')
+      })
   }
 
   return (
@@ -84,5 +84,5 @@ export default function CreateLocationForm() {
         </div>
       </form>
     </Form>
-  );
+  )
 }

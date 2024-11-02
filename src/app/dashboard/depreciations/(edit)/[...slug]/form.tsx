@@ -1,15 +1,15 @@
-"use client";
+'use client'
 
-import api from "@/app/api/api";
-import { useRouter } from "next/navigation";
+import api from '@/app/api/api'
+import { useRouter } from 'next/navigation'
 
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { masterDataSchema } from "@/schema/masters";
+import { z } from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { masterDataSchema } from '@/schema/masters'
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import {
   Form,
   FormControl,
@@ -17,33 +17,33 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { toast } from "sonner";
+} from '@/components/ui/form'
+import { toast } from 'sonner'
 
-import { MasterData } from "@/types/types";
+import { MasterData } from '@/types/types'
 
 export default function EditDepreciationForm({ data }: { data: MasterData }) {
-  const router = useRouter();
+  const router = useRouter()
 
   const form = useForm<z.infer<typeof masterDataSchema>>({
     resolver: zodResolver(masterDataSchema),
     defaultValues: {
       name: data.name,
     },
-  });
+  })
 
   async function onSubmit(values: z.infer<typeof masterDataSchema>) {
-    toast.dismiss();
+    toast.dismiss()
     api
       .put(`depreciations/${data.id}`, values)
       .then(() => {
-        toast.success("Depreciation successfully edited");
-        router.back();
-        router.refresh();
+        toast.success('Depreciation successfully edited')
+        router.back()
+        router.refresh()
       })
       .catch((error) => {
-        toast.error(error.message || "Failed to edit depreciation");
-      });
+        toast.error(error.message || 'Failed to edit depreciation')
+      })
   }
 
   return (
@@ -71,5 +71,5 @@ export default function EditDepreciationForm({ data }: { data: MasterData }) {
         </div>
       </form>
     </Form>
-  );
+  )
 }

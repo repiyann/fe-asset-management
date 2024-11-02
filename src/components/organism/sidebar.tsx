@@ -1,7 +1,7 @@
-"use client";
+'use client'
 
-import { useRouter } from "next/navigation"
-import { signOut } from "next-auth/react"
+import { useRouter } from 'next/navigation'
+import { signOut } from 'next-auth/react'
 
 import {
   BadgeCheck,
@@ -12,13 +12,9 @@ import {
   CreditCard,
   LogOut,
   Sparkles,
-} from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+} from 'lucide-react'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,7 +23,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu'
 import {
   Sidebar,
   SidebarContent,
@@ -41,17 +37,15 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from "@/components/ui/sidebar";
-import { sidebar } from "@/constant/sidebar";
+} from '@/components/ui/sidebar'
+import { sidebar } from '@/constant/sidebar'
 
 export default function DashboardSidebar() {
-  const router = useRouter();
+  const router = useRouter()
 
   async function handleLogout() {
-    await signOut({
-      redirect: false,
-    });
-    router.push("/login");
+    await signOut({ redirect: false })
+    router.push('/login')
   }
 
   return (
@@ -125,9 +119,7 @@ export default function DashboardSidebar() {
                     <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold">
-                      {sidebar.user.name}
-                    </span>
+                    <span className="truncate font-semibold">{sidebar.user.name}</span>
                     <span className="truncate text-xs">{sidebar.user.email}</span>
                   </div>
                   <ChevronsUpDown className="ml-auto size-4" />
@@ -142,19 +134,12 @@ export default function DashboardSidebar() {
                 <DropdownMenuLabel className="p-0 font-normal">
                   <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                     <Avatar className="h-8 w-8 rounded-lg">
-                      <AvatarImage
-                        src={sidebar.user.avatar}
-                        alt={sidebar.user.name}
-                      />
+                      <AvatarImage src={sidebar.user.avatar} alt={sidebar.user.name} />
                       <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                     </Avatar>
                     <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-semibold">
-                        {sidebar.user.name}
-                      </span>
-                      <span className="truncate text-xs">
-                        {sidebar.user.email}
-                      </span>
+                      <span className="truncate font-semibold">{sidebar.user.name}</span>
+                      <span className="truncate text-xs">{sidebar.user.email}</span>
                     </div>
                   </div>
                 </DropdownMenuLabel>
@@ -191,5 +176,5 @@ export default function DashboardSidebar() {
         </SidebarMenu>
       </SidebarFooter>
     </Sidebar>
-  );
+  )
 }

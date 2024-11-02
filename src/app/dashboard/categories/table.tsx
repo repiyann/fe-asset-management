@@ -1,17 +1,17 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import api from "@/app/api/api";
-import { useRouter } from "next/navigation";
+import { useState } from 'react'
+import api from '@/app/api/api'
+import { useRouter } from 'next/navigation'
 
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontal } from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu'
 import {
   Table,
   TableBody,
@@ -19,8 +19,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/table'
+import { Button } from '@/components/ui/button'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -30,44 +30,40 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { toast } from "sonner";
+} from '@/components/ui/alert-dialog'
+import { toast } from 'sonner'
 
-import { generateSlug } from "@/lib/utils";
-import { MasterDataTableProps } from "@/types/types";
+import { generateSlug } from '@/lib/utils'
+import { MasterDataTableProps } from '@/types/types'
 
-export default function CategoriesTable({
-  datas,
-  currentPage,
-  perPage,
-}: MasterDataTableProps) {
-  const router = useRouter();
-  const [deleteId, setDeleteId] = useState<string | null>(null);
+export default function CategoriesTable({ datas, currentPage, perPage }: MasterDataTableProps) {
+  const router = useRouter()
+  const [deleteId, setDeleteId] = useState<string | null>(null)
 
   function handleEdit(id: string, name: string) {
-    const slug = generateSlug(name);
-    router.push(`/dashboard/categories/${slug}&id=${id}/edit`);
+    const slug = generateSlug(name)
+    router.push(`/dashboard/categories/${slug}&id=${id}/edit`)
   }
 
   function handleShow(id: string, name: string) {
-    const slug = generateSlug(name);
-    router.push(`/dashboard/categories/${slug}&id=${id}`);
+    const slug = generateSlug(name)
+    router.push(`/dashboard/categories/${slug}&id=${id}`)
   }
 
   async function handleDelete(id: string) {
-    toast.dismiss();
+    toast.dismiss()
     api
       .delete(`categories/${id}`)
       .then(() => {
-        toast.success("Category successfully deleted");
-        router.refresh();
+        toast.success('Category successfully deleted')
+        router.refresh()
       })
       .catch((error) => {
-        toast.error(error.message || "Failed to delete category");
+        toast.error(error.message || 'Failed to delete category')
       })
       .finally(() => {
-        setDeleteId(null);
-      });
+        setDeleteId(null)
+      })
   }
 
   return (
@@ -85,7 +81,7 @@ export default function CategoriesTable({
         </TableHeader>
         <TableBody>
           {datas.map((data, index) => {
-            const rowIndex = (currentPage - 1) * perPage + index + 1; // Calculate the actual index
+            const rowIndex = (currentPage - 1) * perPage + index + 1 // Calculate the actual index
             return (
               <TableRow key={data.id}>
                 <TableCell>{rowIndex}</TableCell>
@@ -120,33 +116,26 @@ export default function CategoriesTable({
                   </DropdownMenu>
                 </TableCell>
               </TableRow>
-            );
+            )
           })}
         </TableBody>
       </Table>
 
-      <AlertDialog
-        open={deleteId !== null}
-        onOpenChange={() => setDeleteId(null)}
-      >
+      <AlertDialog open={deleteId !== null} onOpenChange={() => setDeleteId(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete this
-              category and remove its data from our servers.
+              This action cannot be undone. This will permanently delete this category and remove
+              its data from our servers.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setDeleteId(null)}>
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction onClick={() => handleDelete(deleteId!)}>
-              Delete
-            </AlertDialogAction>
+            <AlertDialogCancel onClick={() => setDeleteId(null)}>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={() => handleDelete(deleteId!)}>Delete</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
     </>
-  );
+  )
 }

@@ -1,16 +1,16 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "@/schema/auth";
-import { signIn } from "next-auth/react";
+import { z } from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { loginSchema } from '@/schema/auth'
+import { signIn } from 'next-auth/react'
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import {
   Form,
   FormControl,
@@ -18,40 +18,40 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { toast } from "sonner";
+} from '@/components/ui/form'
+import { toast } from 'sonner'
 
 export default function LoginForm() {
-  const router = useRouter();
+  const router = useRouter()
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
-  });
+  })
 
   async function onSubmit(values: z.infer<typeof loginSchema>) {
-    toast.dismiss();
+    toast.dismiss()
 
-    const result = signIn("credentials", {
+    const result = signIn('credentials', {
       email: values.email,
       password: values.password,
       redirect: false,
-    });
+    })
 
     toast.promise(result, {
-      loading: "Loading...",
+      loading: 'Loading...',
       success: () => {
-        form.reset();
-        router.push("/dashboard");
-        return "Successfully logged in";
+        form.reset()
+        router.push('/dashboard')
+        return 'Successfully logged in'
       },
       error: () => {
-        return "Invalid credentials";
+        return 'Invalid credentials'
       },
-    });
+    })
   }
 
   return (
@@ -89,11 +89,7 @@ export default function LoginForm() {
                     </Link>
                   </div>
                   <FormControl>
-                    <Input
-                      type="password"
-                      placeholder="Enter password"
-                      {...field}
-                    />
+                    <Input type="password" placeholder="Enter password" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -106,5 +102,5 @@ export default function LoginForm() {
         </div>
       </form>
     </Form>
-  );
+  )
 }

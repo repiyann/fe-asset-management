@@ -1,15 +1,15 @@
-"use client";
+'use client'
 
-import api from "@/app/api/api";
-import { useRouter } from "next/navigation";
+import api from '@/app/api/api'
+import { useRouter } from 'next/navigation'
 
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { locationSchema } from "@/schema/masters";
+import { z } from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { locationSchema } from '@/schema/masters'
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import {
   Form,
   FormControl,
@@ -17,13 +17,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { toast } from "sonner";
+} from '@/components/ui/form'
+import { toast } from 'sonner'
 
-import { Location } from "@/types/types";
+import { Location } from '@/types/types'
 
 export default function EditLocationForm({ data }: { data: Location }) {
-  const router = useRouter();
+  const router = useRouter()
 
   const form = useForm<z.infer<typeof locationSchema>>({
     resolver: zodResolver(locationSchema),
@@ -31,20 +31,20 @@ export default function EditLocationForm({ data }: { data: Location }) {
       name: data.name,
       address: data.address,
     },
-  });
+  })
 
   async function onSubmit(values: z.infer<typeof locationSchema>) {
-    toast.dismiss();
+    toast.dismiss()
     api
       .put(`locations/${data.id}`, values)
       .then(() => {
-        toast.success("Location successfully edited");
-        router.back();
-        router.refresh();
+        toast.success('Location successfully edited')
+        router.back()
+        router.refresh()
       })
       .catch((error) => {
-        toast.error(error.message || "Failed to edit location");
-      });
+        toast.error(error.message || 'Failed to edit location')
+      })
   }
 
   return (
@@ -87,5 +87,5 @@ export default function EditLocationForm({ data }: { data: Location }) {
         </div>
       </form>
     </Form>
-  );
+  )
 }

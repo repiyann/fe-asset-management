@@ -1,11 +1,11 @@
-"use client";
+'use client'
 
-import api from "@/app/api/api";
-import { useRouter } from "next/navigation";
+import api from '@/app/api/api'
+import { useRouter } from 'next/navigation'
 
-import { ArrowLeft, Building2, Pencil, Trash2 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { ArrowLeft, Building2, Pencil, Trash2 } from 'lucide-react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,32 +16,32 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { toast } from "sonner";
+} from '@/components/ui/alert-dialog'
+import { toast } from 'sonner'
 
-import { MasterData } from "@/types/types";
-import { generateSlug } from "@/lib/utils";
+import { MasterData } from '@/types/types'
+import { generateSlug } from '@/lib/utils'
 
 export default function FixedAssetCard({ data }: { data: MasterData }) {
-  const router = useRouter();
+  const router = useRouter()
 
   function handleEdit(id: string, name: string) {
-    const slug = generateSlug(name);
-    router.push(`/dashboard/fixed-assets/${slug}&id=${id}/edit`);
+    const slug = generateSlug(name)
+    router.push(`/dashboard/fixed-assets/${slug}&id=${id}/edit`)
   }
 
   async function handleDelete(id: string) {
-    toast.dismiss();
+    toast.dismiss()
     api
       .delete(`fixed-assets/${id}`)
       .then(() => {
-        toast.success("Fixed asset successfully deleted");
-        router.back();
-        router.refresh();
+        toast.success('Fixed asset successfully deleted')
+        router.back()
+        router.refresh()
       })
       .catch((error) => {
-        toast.error(error.message || "Failed to delete fixed asset");
-      });
+        toast.error(error.message || 'Failed to delete fixed asset')
+      })
   }
 
   return (
@@ -53,11 +53,7 @@ export default function FixedAssetCard({ data }: { data: MasterData }) {
             Back
           </Button>
           <div className="space-x-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => handleEdit(data.id, data.name)}
-            >
+            <Button variant="outline" size="sm" onClick={() => handleEdit(data.id, data.name)}>
               <Pencil className="mr-2 h-4 w-4" />
               Edit
             </Button>
@@ -72,8 +68,8 @@ export default function FixedAssetCard({ data }: { data: MasterData }) {
                 <AlertDialogHeader>
                   <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                   <AlertDialogDescription>
-                    This action cannot be undone. This will permanently delete
-                    this fixed asset and remove its data from our servers.
+                    This action cannot be undone. This will permanently delete this fixed asset and
+                    remove its data from our servers.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -93,18 +89,14 @@ export default function FixedAssetCard({ data }: { data: MasterData }) {
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="grid gap-2">
-            <div className="text-sm font-medium text-muted-foreground">
-              Fixed Asset Code
-            </div>
+            <div className="text-sm font-medium text-muted-foreground">Fixed Asset Code</div>
             <div className="flex items-center gap-2 text-lg font-medium">
               <Building2 className="h-5 w-5 text-muted-foreground" />
               {data.code}
             </div>
           </div>
           <div className="grid gap-2">
-            <div className="text-sm font-medium text-muted-foreground">
-              Fixed Asset Name
-            </div>
+            <div className="text-sm font-medium text-muted-foreground">Fixed Asset Name</div>
             <div className="flex items-center gap-2 text-lg font-medium">
               <Building2 className="h-5 w-5 text-muted-foreground" />
               {data.name}
@@ -113,5 +105,5 @@ export default function FixedAssetCard({ data }: { data: MasterData }) {
         </CardContent>
       </Card>
     </>
-  );
+  )
 }

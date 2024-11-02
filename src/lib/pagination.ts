@@ -1,22 +1,22 @@
-import api from "@/app/api/api";
-import { ResponsePaginated } from "@/types/types";
+import api from '@/app/api/api'
+import { ResponsePaginated } from '@/types/types'
 
 export async function getPaginationData<T>(
   url: string,
   options: {
-    page?: number;
+    page?: number
   }
 ): Promise<ResponsePaginated<T>> {
-  const queryParams: string[] = [];
+  const queryParams: string[] = []
 
   if (options.page !== undefined || options.page !== null) {
-    queryParams.push(`page=${options.page}`);
+    queryParams.push(`page=${options.page}`)
   }
 
   if (queryParams.length > 0) {
-    url += `?${queryParams.join("&")}`;
+    url += `?${queryParams.join('&')}`
   }
-  const response = await api.get(url);
+  const response = await api.get(url)
 
-  return response.data;
+  return response.data
 }

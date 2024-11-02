@@ -1,5 +1,5 @@
-import Navbar from "@/components/organism/navbar"
-import { SidebarInset } from "@/components/ui/sidebar";
+import Navbar from '@/components/organism/navbar'
+import { SidebarInset } from '@/components/ui/sidebar'
 
 export default function Dashboard() {
   return (
@@ -14,5 +14,5 @@ export default function Dashboard() {
         <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
       </div>
     </SidebarInset>
-  );
+  )
 }

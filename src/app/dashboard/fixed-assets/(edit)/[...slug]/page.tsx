@@ -1,27 +1,17 @@
-import api from "@/app/api/api";
-import { redirect } from "next/navigation";
+import api from '@/app/api/api'
+import { redirect } from 'next/navigation'
 
-import Navbar from "@/components/organism/navbar";
-import { SidebarInset } from "@/components/ui/sidebar";
-import EditFixedAssetForm from "./form";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import Navbar from '@/components/organism/navbar'
+import { SidebarInset } from '@/components/ui/sidebar'
+import EditFixedAssetForm from './form'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
-import { MasterData } from "@/types/types";
+import { MasterData } from '@/types/types'
 
-export default async function EditFixedAsset({
-  params,
-}: {
-  params: Promise<{ slug: string[] }>;
-}) {
-  const decodedParam = decodeURIComponent((await params).slug[0]);
-  const separatedParams = decodedParam.split("&id=");
-  const id = separatedParams[1];
+export default async function EditFixedAsset({ params }: { params: Promise<{ slug: string[] }> }) {
+  const decodedParam = decodeURIComponent((await params).slug[0])
+  const separatedParams = decodedParam.split('&id=')
+  const id = separatedParams[1]
 
   return api
     .get(`fixed-assets/${id}`)
@@ -41,9 +31,9 @@ export default async function EditFixedAsset({
             </Card>
           </div>
         </SidebarInset>
-      );
+      )
     })
     .catch(() => {
-      redirect("/dashboard/fixed-assets");
-    });
+      redirect('/dashboard/fixed-assets')
+    })
 }

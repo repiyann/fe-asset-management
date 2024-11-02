@@ -1,11 +1,11 @@
-"use client";
+'use client'
 
-import api from "@/app/api/api";
-import { useRouter } from "next/navigation";
+import api from '@/app/api/api'
+import { useRouter } from 'next/navigation'
 
-import { ArrowLeft, Building2, Pencil, Trash2 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { ArrowLeft, Building2, Pencil, Trash2 } from 'lucide-react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,32 +16,32 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { toast } from "sonner";
+} from '@/components/ui/alert-dialog'
+import { toast } from 'sonner'
 
-import { MasterData } from "@/types/types";
-import { generateSlug } from "@/lib/utils";
+import { MasterData } from '@/types/types'
+import { generateSlug } from '@/lib/utils'
 
 export default function AccuDepreciationCard({ data }: { data: MasterData }) {
-  const router = useRouter();
+  const router = useRouter()
 
   function handleEdit(id: string, name: string) {
-    const slug = generateSlug(name);
-    router.push(`/dashboard/accu-depreciations/${slug}&id=${id}/edit`);
+    const slug = generateSlug(name)
+    router.push(`/dashboard/accu-depreciations/${slug}&id=${id}/edit`)
   }
 
   async function handleDelete(id: string) {
-    toast.dismiss();
+    toast.dismiss()
     api
       .delete(`accu-depreciations/${id}`)
       .then(() => {
-        toast.success("Accumulation depreciation successfully deleted");
-        router.back();
-        router.refresh();
+        toast.success('Accumulation depreciation successfully deleted')
+        router.back()
+        router.refresh()
       })
       .catch((error) => {
-        toast.error(error.message || "Failed to delete accumulation depreciation");
-      });
+        toast.error(error.message || 'Failed to delete accumulation depreciation')
+      })
   }
 
   return (
@@ -53,11 +53,7 @@ export default function AccuDepreciationCard({ data }: { data: MasterData }) {
             Back
           </Button>
           <div className="space-x-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => handleEdit(data.id, data.name)}
-            >
+            <Button variant="outline" size="sm" onClick={() => handleEdit(data.id, data.name)}>
               <Pencil className="mr-2 h-4 w-4" />
               Edit
             </Button>
@@ -72,8 +68,8 @@ export default function AccuDepreciationCard({ data }: { data: MasterData }) {
                 <AlertDialogHeader>
                   <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                   <AlertDialogDescription>
-                    This action cannot be undone. This will permanently delete
-                    this accumulation depreciation and remove its data from our servers.
+                    This action cannot be undone. This will permanently delete this accumulation
+                    depreciation and remove its data from our servers.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -113,5 +109,5 @@ export default function AccuDepreciationCard({ data }: { data: MasterData }) {
         </CardContent>
       </Card>
     </>
-  );
+  )
 }

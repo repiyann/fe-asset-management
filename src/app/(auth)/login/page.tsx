@@ -1,7 +1,7 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image'
+import Link from 'next/link'
 
-import LoginForm from "./form";
+import LoginForm from './form'
 
 export default function Login() {
   return (
@@ -16,7 +16,7 @@ export default function Login() {
           </div>
           <LoginForm />
           <div className="mt-4 text-center text-sm">
-            Don&apos;t have an account?{" "}
+            Don&apos;t have an account?{' '}
             <Link href="/register" className="underline">
               Sign up
             </Link>
@@ -33,5 +33,5 @@ export default function Login() {
         />
       </div>
     </div>
-  );
+  )
 }
