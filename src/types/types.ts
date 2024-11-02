@@ -19,8 +19,8 @@ export interface ResponsePaginated<T> {
   data: T
 }
 
-export interface ApiError {
-  response?: { data: { message: string } }
+export interface ResponseAsset<T> {
+  data: T
 }
 
 export interface Location {
@@ -46,4 +46,41 @@ export interface MasterDataTableProps {
   datas: MasterData[]
   currentPage: number
   perPage: number
+}
+
+export interface Asset {
+  id: string
+  customNumber: number
+  name: string
+  location: Location
+  category: MasterData
+  fixedAsset: MasterData
+  description: string
+  acquisitionCost: number
+  acquisitionDate: string
+  nonDepreciation: boolean
+  method: string
+  depreciation: MasterData
+  accuDepreciation: MasterData
+}
+
+export interface CreateAssetFormProps {
+  locations: Location[]
+  categories: MasterData[]
+  depreciations: MasterData[]
+  fixedAssets: MasterData[]
+  accuDepreciations: MasterData[]
+}
+
+export interface AssetTableProps {
+  datas: Asset[]
+  currentPage: number
+  perPage: number
+}
+
+export interface Transactions {
+  id: string
+  code: number
+  name: string
+  date: Date
 }
