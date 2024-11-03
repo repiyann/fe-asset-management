@@ -6,9 +6,6 @@ import { getMaster } from '@/lib/asset'
 
 export default async function CreateAsset() {
   const { locations, categories, depreciations, fixedAssets, accuDepreciations } = await getMaster()
-
-  console.log('loc', locations)
-
   return (
     <SidebarInset>
       <Navbar />
