@@ -72,6 +72,33 @@ export interface CreateAssetFormProps {
   accuDepreciations: MasterData[]
 }
 
+export interface EditAssetFormProps {
+  data: AssetEditProps
+  locations: Location[]
+  categories: MasterData[]
+  depreciations: MasterData[]
+  fixedAssets: MasterData[]
+  accuDepreciations: MasterData[]
+}
+
+export interface AssetEditProps {
+  id: string
+  customNumber: number
+  name: string
+  location: Location
+  category: MasterData
+  fixedAsset: MasterData
+  description: string
+  acquisitionCost: number
+  acquisitionDate: string
+  nonDepreciation: boolean
+  method: string
+  depreciation: MasterData
+  accuDepreciation: MasterData
+  transaction: Transactions
+}
+
+
 export interface AssetTableProps {
   datas: Asset[]
   currentPage: number
@@ -80,7 +107,10 @@ export interface AssetTableProps {
 
 export interface Transactions {
   id: string
-  code: number
+  asset_id: number
   name: string
-  date: Date
+  acquisitionCost: number
+  acquisitionDate: string
+  usagePeriod: number
+  usageValuePerYear: number
 }
