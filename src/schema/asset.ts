@@ -10,10 +10,13 @@ export const assetSchema = z.object({
     required_error: 'Acquisition date is required.',
   }),
   acquisitionCost: z.number().positive(),
-  nonDepreciation: z.boolean(),
-  method: z.string().max(20).optional(),
-  usagePeriod: z.number().positive().optional(),
-  usageValuePerYear: z.number().positive().optional(),
-  depreciationId: z.string().min(3).max(40).optional(),
-  accuDepreciationId: z.string().min(3).max(40).optional(),
+  nonDepreciation: z.boolean().or(
+    z.object({
+      method: z.string().max(20),
+      usagePeriod: z.number().positive(),
+      usageValuePerYear: z.number().positive(),
+      depreciationId: z.string().min(3).max(40),
+      accuDepreciationId: z.string().min(3).max(40),
+    })
+  ),
 })
